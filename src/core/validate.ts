@@ -17,7 +17,7 @@ const IMAGE_RE = /^data:image\/(png|jpe?g|gif|webp|svg\+xml|bmp)[;,]/i;
 /** Validates one raw (unknown) question. Returns a normalised Question or the list of problems. */
 export function validateQuestion(raw: unknown, pack: string, now = Date.now()): Validated<Question> {
   const errors: string[] = [];
-  if (!isObj(raw)) return { ok: false, errors: ['pitanje nije objekt'] };
+  if (!isObj(raw)) return { ok: false, errors: ['pitanje nije objekat'] };
 
   const id = raw.id;
   if (!nonEmptyStr(id)) errors.push('nedostaje "id"');
@@ -29,7 +29,7 @@ export function validateQuestion(raw: unknown, pack: string, now = Date.now()): 
 
   const lesson = raw.lesson;
   if (typeof lesson !== 'number' || !Number.isInteger(lesson) || lesson < 1 || lesson > 16) {
-    errors.push('"lesson" mora biti cijeli broj 1-16');
+    errors.push('"lesson" mora biti ceo broj 1-16');
   }
 
   if (!nonEmptyStr(raw.topic)) errors.push('nedostaje "topic"');
@@ -50,7 +50,7 @@ export function validateQuestion(raw: unknown, pack: string, now = Date.now()): 
     const seen = new Set<string>();
     raw.options.forEach((o, i) => {
       if (!isObj(o)) {
-        errors.push(`opcija #${i + 1} nije objekt`);
+        errors.push(`opcija #${i + 1} nije objekat`);
         return;
       }
       if (!nonEmptyStr(o.id)) {
@@ -71,7 +71,7 @@ export function validateQuestion(raw: unknown, pack: string, now = Date.now()): 
     errors.push('"correct" mora biti neprazan niz');
   } else {
     const bad = raw.correct.filter((c) => typeof c !== 'string');
-    if (bad.length) errors.push('"correct" smije sadržavati samo stringove');
+    if (bad.length) errors.push('"correct" sme da sadrži samo stringove');
     else {
       correct = raw.correct as string[];
       if (new Set(correct).size !== correct.length) errors.push('"correct" sadrži duplikate');
@@ -112,14 +112,14 @@ export function validateQuestion(raw: unknown, pack: string, now = Date.now()): 
 
 export function validateExam(raw: unknown, pack: string): Validated<ExamDef> {
   const errors: string[] = [];
-  if (!isObj(raw)) return { ok: false, errors: ['ispit nije objekt'] };
+  if (!isObj(raw)) return { ok: false, errors: ['ispit nije objekat'] };
   if (!nonEmptyStr(raw.id)) errors.push('nedostaje "id"');
   if (!nonEmptyStr(raw.name)) errors.push('nedostaje "name"');
   let ids: string[] = [];
   if (!Array.isArray(raw.questionIds) || raw.questionIds.length === 0) {
     errors.push('"questionIds" mora biti neprazan niz');
   } else if (raw.questionIds.some((x) => !nonEmptyStr(x))) {
-    errors.push('"questionIds" smije sadržavati samo neprazne stringove');
+    errors.push('"questionIds" sme da sadrži samo neprazne stringove');
   } else {
     ids = raw.questionIds as string[];
     if (new Set(ids).size !== ids.length) errors.push('"questionIds" sadrži duplikate');

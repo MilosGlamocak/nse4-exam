@@ -80,7 +80,7 @@ export function Custom() {
           </div>
         </div>
         <div>
-          <h3>Teme {topics.size > 0 && <span class="muted small">({topics.size} odabrano)</span>}</h3>
+          <h3>Teme {topics.size > 0 && <span class="muted small">({topics.size} izabrano)</span>}</h3>
           <input type="search" placeholder="Traži temu…" value={topicQ} onInput={(e) => setTopicQ((e.target as HTMLInputElement).value)} style={{ maxWidth: '320px', marginBottom: '8px' }} />
           <div class="scroll-list">
             {vis.map(([t, c]) => (
@@ -102,12 +102,12 @@ export function Custom() {
               </label>
             ))}
           </div>
-          <p class="small muted" style={{ marginBottom: 0 }}>„Pogrešna“ i „označena“ se odnose na zadnji put kada je pitanje bilo u nekom pokušaju.</p>
+          <p class="small muted" style={{ marginBottom: 0 }}>„Pogrešna“ i „označena“ se odnose na poslednji put kada je pitanje bilo u nekom pokušaju.</p>
         </div>
       </div>
 
       <div class="card" style={{ marginTop: '16px' }}>
-        <h3>Postavke ispita</h3>
+        <h3>Podešavanja ispita</h3>
         <div class="row" style={{ alignItems: 'flex-end' }}>
           <label class="field"><span>Broj pitanja (max {matched.length})</span>
             <input type="number" min={1} value={count} onInput={(e) => setCount(+(e.target as HTMLInputElement).value)} />
@@ -115,7 +115,7 @@ export function Custom() {
           <label class="field"><span>Mod</span>
             <select value={mode} onChange={(e) => setMode((e.target as HTMLSelectElement).value as Mode)} style={{ width: '170px' }}>
               <option value="exam">Ispit (bez feedbacka)</option>
-              <option value="practice">Vježba (odmah feedback)</option>
+              <option value="practice">Vežba (odmah feedback)</option>
             </select>
           </label>
           <label class="check" style={{ marginBottom: '8px' }}>

@@ -1,0 +1,920 @@
+{
+  "pack": "knowledge-checks-v1",
+  "questions": [
+    {
+      "id": "kc-01-01",
+      "source": "kc",
+      "lesson": 1,
+      "topic": "Knowledge Check - System and Network Settings",
+      "type": "single",
+      "question": "How do you restrict logins to FortiGate from specific IP addresses?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Change the FortiGate management interface IP address."
+        },
+        {
+          "id": "B",
+          "text": "Configure a trusted host."
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-01-02",
+      "source": "kc",
+      "lesson": 1,
+      "topic": "Knowledge Check - System and Network Settings",
+      "type": "single",
+      "question": "Which protocol option should you enable to give FortiManager access on FortiGate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FMG-Access protocol"
+        },
+        {
+          "id": "B",
+          "text": "FTM protocol"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-02-01",
+      "source": "kc",
+      "lesson": 2,
+      "topic": "Knowledge Check - Logging and Monitoring",
+      "type": "single",
+      "question": "In which operating mode does FortiAnalyzer use analytics logs?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Analyzer"
+        },
+        {
+          "id": "B",
+          "text": "Collector"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-02-02",
+      "source": "kc",
+      "lesson": 2,
+      "topic": "Knowledge Check - Logging and Monitoring",
+      "type": "single",
+      "question": "Which protocol does FortiGate use to send encrypted logs to FortiAnalyzer?",
+      "options": [
+        {
+          "id": "A",
+          "text": "OFTPS"
+        },
+        {
+          "id": "B",
+          "text": "SSL"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-02-03",
+      "source": "kc",
+      "lesson": 2,
+      "topic": "Knowledge Check - Logging and Monitoring",
+      "type": "single",
+      "question": "If you enable reliable logging, which transport protocol will FortiGate use?",
+      "options": [
+        {
+          "id": "A",
+          "text": "UDP"
+        },
+        {
+          "id": "B",
+          "text": "TCP"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-03-01",
+      "source": "kc",
+      "lesson": 3,
+      "topic": "Knowledge Check - Firewall Policies and NAT",
+      "type": "single",
+      "question": "Which criteria does FortiGate use to match traffic to a firewall policy?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Source and destination interfaces"
+        },
+        {
+          "id": "B",
+          "text": "Security profiles"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-03-02",
+      "source": "kc",
+      "lesson": 3,
+      "topic": "Knowledge Check - Firewall Policies and NAT",
+      "type": "single",
+      "question": "What is the purpose of applying security profiles to a firewall policy?",
+      "options": [
+        {
+          "id": "A",
+          "text": "To allow access to specific subnets"
+        },
+        {
+          "id": "B",
+          "text": "To protect your network from threats, and control access to specific applications and URL"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-03-03",
+      "source": "kc",
+      "lesson": 3,
+      "topic": "Knowledge Check - Firewall Policies and NAT",
+      "type": "single",
+      "question": "What is the default IP pool type?",
+      "options": [
+        {
+          "id": "A",
+          "text": "One-to-one"
+        },
+        {
+          "id": "B",
+          "text": "Overload"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-03-04",
+      "source": "kc",
+      "lesson": 3,
+      "topic": "Knowledge Check - Firewall Policies and NAT",
+      "type": "single",
+      "question": "Which is the default VIP type?",
+      "options": [
+        {
+          "id": "A",
+          "text": "static-nat"
+        },
+        {
+          "id": "B",
+          "text": "load-balance"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-04-01",
+      "source": "kc",
+      "lesson": 4,
+      "topic": "Knowledge Check - Routing",
+      "type": "single",
+      "question": "The priority attribute is a tiebreaker for which type of routes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Static"
+        },
+        {
+          "id": "B",
+          "text": "Connected"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-04-02",
+      "source": "kc",
+      "lesson": 4,
+      "topic": "Knowledge Check - Routing",
+      "type": "single",
+      "question": "Which attribute does FortiGate use to determine the best route for same-protocol, duplicate dynamic routes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Priority"
+        },
+        {
+          "id": "B",
+          "text": "Metric"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-04-03",
+      "source": "kc",
+      "lesson": 4,
+      "topic": "Knowledge Check - Routing",
+      "type": "single",
+      "question": "What is the default ECMP algorithm on FortiGate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Weighted"
+        },
+        {
+          "id": "B",
+          "text": "Source IP"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-05-01",
+      "source": "kc",
+      "lesson": 5,
+      "topic": "Knowledge Check - Firewall Authentication",
+      "type": "single",
+      "question": "A remote LDAP user is trying to authenticate with a username and password. How does FortiGate verify the login credentials?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FortiGate queries its own database for user credentials"
+        },
+        {
+          "id": "B",
+          "text": "FortiGate sends the user-entered credentials to the remote server for verification."
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-05-02",
+      "source": "kc",
+      "lesson": 5,
+      "topic": "Knowledge Check - Firewall Authentication",
+      "type": "single",
+      "question": "When FortiGate uses a RADIUS server for remote authentication, which statement about RADIUS is true?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FortiGate must query the remote RADIUS server using the distinguished name (dn)."
+        },
+        {
+          "id": "B",
+          "text": "RADIUS group memberships are provided by vendor-specific attributes (VSAs) configured on the RADIUS server."
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-05-03",
+      "source": "kc",
+      "lesson": 5,
+      "topic": "Knowledge Check - Firewall Authentication",
+      "type": "single",
+      "question": "Which statement about active authentication is true?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Active authentication is always used before passive authentication."
+        },
+        {
+          "id": "B",
+          "text": "The firewall policy must allow the HTTP, HTTPS, FTP, or Telnet protocols in order for the user to be prompted for credentials."
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-06-01",
+      "source": "kc",
+      "lesson": 6,
+      "topic": "Knowledge Check - FSSO",
+      "type": "single",
+      "question": "Which mode is recommended for FSSO deployments?",
+      "options": [
+        {
+          "id": "A",
+          "text": "DC agent mode"
+        },
+        {
+          "id": "B",
+          "text": "Polling mode: Agentless"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-06-02",
+      "source": "kc",
+      "lesson": 6,
+      "topic": "Knowledge Check - FSSO",
+      "type": "single",
+      "question": "Which naming conventions does the FSSO collector agent use to access the Windows AD in standard access mode?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Windows convention - NetBios: Domain\\groups"
+        },
+        {
+          "id": "B",
+          "text": "LDAP convention: CN=User,OU=Name,DC=Domain"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-06-03",
+      "source": "kc",
+      "lesson": 6,
+      "topic": "Knowledge Check - FSSO",
+      "type": "single",
+      "question": "Which FSSO mode requires more FortiGate system resources (CPU and RAM)?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Collector agent-based polling mode"
+        },
+        {
+          "id": "B",
+          "text": "Agentless polling mode"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-07-01",
+      "source": "kc",
+      "lesson": 7,
+      "topic": "Knowledge Check - Certificate Operations",
+      "type": "single",
+      "question": "What is the most common reason for a certificate error if full SSL inspection is enabled on a Windows application?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The FortiGate CA certificate is not trusted"
+        },
+        {
+          "id": "B",
+          "text": "The certificate is listed in the CRL."
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-07-02",
+      "source": "kc",
+      "lesson": 7,
+      "topic": "Knowledge Check - Certificate Operations",
+      "type": "single",
+      "question": "Which SSL inspection profile must be used if FortiGate is used for antivirus or IPS control?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Certificate inspection"
+        },
+        {
+          "id": "B",
+          "text": "Deep inspection"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-08-01",
+      "source": "kc",
+      "lesson": 8,
+      "topic": "Knowledge Check - Antivirus",
+      "type": "single",
+      "question": "Which additional features of an antivirus profile are available in proxy-based inspection mode?",
+      "options": [
+        {
+          "id": "A",
+          "text": "MAPI, SSH, CDR, and FortiNDR"
+        },
+        {
+          "id": "B",
+          "text": "Full and quick"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-08-02",
+      "source": "kc",
+      "lesson": 8,
+      "topic": "Knowledge Check - Antivirus",
+      "type": "single",
+      "question": "What does the oversize files logging setting do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Enables logging of all files that exceed the oversize limit"
+        },
+        {
+          "id": "B",
+          "text": "Logs all files that are over 5 MB"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-08-03",
+      "source": "kc",
+      "lesson": 8,
+      "topic": "Knowledge Check - Antivirus",
+      "type": "single",
+      "question": "Which feature does not support stream-based scanning?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Data loss prevention (DLP)"
+        },
+        {
+          "id": "B",
+          "text": "Signature-based detection"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-09-01",
+      "source": "kc",
+      "lesson": 9,
+      "topic": "Knowledge Check - Web Filtering",
+      "type": "single",
+      "question": "Which action in the FortiGuard category filter supports the category usage quota?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Warning"
+        },
+        {
+          "id": "B",
+          "text": "Allow"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-09-02",
+      "source": "kc",
+      "lesson": 9,
+      "topic": "Knowledge Check - Web Filtering",
+      "type": "single",
+      "question": "Which configuration change is required to use UDP ports 443, 53, or 8888 for the FortiGuard connection?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use the set fortiguard-anycast disable command on the CLI."
+        },
+        {
+          "id": "B",
+          "text": "Enable the Override FortiGuard Servers setting on the GUI."
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-10-01",
+      "source": "kc",
+      "lesson": 10,
+      "topic": "Knowledge Check - IPS and Application Control",
+      "type": "single",
+      "question": "Which IPS component is responsible for application control?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Protocol decoders"
+        },
+        {
+          "id": "B",
+          "text": "IPS engine"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-10-02",
+      "source": "kc",
+      "lesson": 10,
+      "topic": "Knowledge Check - IPS and Application Control",
+      "type": "single",
+      "question": "Which statement about the HTTP block page for application control is true?",
+      "options": [
+        {
+          "id": "A",
+          "text": "It can be used only for web applications."
+        },
+        {
+          "id": "B",
+          "text": "It works for all types of applications."
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-11-01",
+      "source": "kc",
+      "lesson": 11,
+      "topic": "Knowledge Check - IPsec VPN",
+      "type": "single",
+      "question": "What is a configuration requirement for an IPsec tunnel to come up?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A firewall policy accepting traffic on the IPsec tunnel"
+        },
+        {
+          "id": "B",
+          "text": "A route for IPsec traffic"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-11-02",
+      "source": "kc",
+      "lesson": 11,
+      "topic": "Knowledge Check - IPsec VPN",
+      "type": "single",
+      "question": "Which setting determines whether a tunnel is used as primary or backup without ECMP?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Routing"
+        },
+        {
+          "id": "B",
+          "text": "Firewall policies"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-11-03",
+      "source": "kc",
+      "lesson": 11,
+      "topic": "Knowledge Check - IPsec VPN",
+      "type": "single",
+      "question": "When the remote gateway is set to dial-up user, a static route to the remote network is added to the routing table after ______.",
+      "options": [
+        {
+          "id": "A",
+          "text": "Phase 1 comes up"
+        },
+        {
+          "id": "B",
+          "text": "Phase 2 comes up"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-12-01",
+      "source": "kc",
+      "lesson": 12,
+      "topic": "Knowledge Check - SD-WAN",
+      "type": "single",
+      "question": "What item is defined in an SD-WAN rule?",
+      "options": [
+        {
+          "id": "A",
+          "text": "SLA criteria"
+        },
+        {
+          "id": "B",
+          "text": "Security profile"
+        },
+        {
+          "id": "C",
+          "text": "Logging options"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-12-02",
+      "source": "kc",
+      "lesson": 12,
+      "topic": "Knowledge Check - SD-WAN",
+      "type": "single",
+      "question": "What is the routing behavior in an SD-WAN context?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Static routes apply first."
+        },
+        {
+          "id": "B",
+          "text": "Regular policy routes apply first."
+        },
+        {
+          "id": "C",
+          "text": "SD-WAN policy routes apply first."
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-12-03",
+      "source": "kc",
+      "lesson": 12,
+      "topic": "Knowledge Check - SD-WAN",
+      "type": "single",
+      "question": "Where can you review SD-WAN event history?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Forward Traffic in Log & Report"
+        },
+        {
+          "id": "B",
+          "text": "SD-WAN widget on the dashboard"
+        },
+        {
+          "id": "C",
+          "text": "SD-WAN widget in System Events"
+        }
+      ],
+      "correct": [
+        "C"
+      ]
+    },
+    {
+      "id": "kc-13-01",
+      "source": "kc",
+      "lesson": 13,
+      "topic": "Knowledge Check - High Availability",
+      "type": "single",
+      "question": "What is the default order criteria (override disabled) for selecting the primary device in an HA cluster?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Connected monitored ports > HA uptime > priority > serial number"
+        },
+        {
+          "id": "B",
+          "text": "Priority > HA uptime > connected monitored ports > serial number"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-13-02",
+      "source": "kc",
+      "lesson": 13,
+      "topic": "Knowledge Check - High Availability",
+      "type": "single",
+      "question": "Which HA setting must be identical in active-passive HA cluster members?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hostname"
+        },
+        {
+          "id": "B",
+          "text": "Group name"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-13-03",
+      "source": "kc",
+      "lesson": 13,
+      "topic": "Knowledge Check - High Availability",
+      "type": "single",
+      "question": "Which statement about the two HA clusters in the same broadcast domain and using the same HA group ID is true?",
+      "options": [
+        {
+          "id": "A",
+          "text": "You may experience MAC address conflicts."
+        },
+        {
+          "id": "B",
+          "text": "You may experience IP address conflicts."
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-14-01",
+      "source": "kc",
+      "lesson": 14,
+      "topic": "Knowledge Check - Diagnostics and Troubleshooting",
+      "type": "single",
+      "question": "Which information is displayed in the output of a debug flow?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Incoming interface and matching firewall policy"
+        },
+        {
+          "id": "B",
+          "text": "Matching security profile and traffic log"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-14-02",
+      "source": "kc",
+      "lesson": 14,
+      "topic": "Knowledge Check - Diagnostics and Troubleshooting",
+      "type": "single",
+      "question": "When is a new TCP session allocated?",
+      "options": [
+        {
+          "id": "A",
+          "text": "When a SYN packet is received"
+        },
+        {
+          "id": "B",
+          "text": "When a SYN/ACK packet is received"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-14-03",
+      "source": "kc",
+      "lesson": 14,
+      "topic": "Knowledge Check - Diagnostics and Troubleshooting",
+      "type": "single",
+      "question": "Which action does FortiGate take during memory conserve mode?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Configuration changes are not allowed."
+        },
+        {
+          "id": "B",
+          "text": "Administrative access is denied."
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-15-01",
+      "source": "kc",
+      "lesson": 15,
+      "topic": "Knowledge Check - FortiGate in the Cloud",
+      "type": "single",
+      "question": "Who is responsible for building security in the public cloud?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Customer"
+        },
+        {
+          "id": "B",
+          "text": "Cloud provider"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    },
+    {
+      "id": "kc-15-02",
+      "source": "kc",
+      "lesson": 15,
+      "topic": "Knowledge Check - FortiGate in the Cloud",
+      "type": "single",
+      "question": "Which product is the best solution for SD-WAN deployment in the public cloud?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FortiGate CNF"
+        },
+        {
+          "id": "B",
+          "text": "FortiGate VM"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-16-01",
+      "source": "kc",
+      "lesson": 16,
+      "topic": "Knowledge Check - FortiSASE",
+      "type": "single",
+      "question": "Which device acts as a service provider when SSO is configured on FortiSASE?",
+      "options": [
+        {
+          "id": "A",
+          "text": "FortiAuthenticator"
+        },
+        {
+          "id": "B",
+          "text": "FortiSASE"
+        }
+      ],
+      "correct": [
+        "B"
+      ]
+    },
+    {
+      "id": "kc-16-02",
+      "source": "kc",
+      "lesson": 16,
+      "topic": "Knowledge Check - FortiSASE",
+      "type": "single",
+      "question": "Which file does FortiSASE distribute to users in an agentless deployment?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The PAC file"
+        },
+        {
+          "id": "B",
+          "text": "The FortiClient config file"
+        }
+      ],
+      "correct": [
+        "A"
+      ]
+    }
+  ]
+}

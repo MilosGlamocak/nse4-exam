@@ -65,7 +65,7 @@ export function backupMetaAfter(meta: Meta, now = Date.now()): Meta {
 
 export const BACKUP_STALE_MS = 7 * 24 * 3600 * 1000;
 
-export function backupDue(meta: Meta, hasData: boolean, now = Date.now()): boolean {
+export function backupDue(meta: Pick<Meta, 'lastBackupAt' | 'bannerSnoozedUntil'>, hasData: boolean, now = Date.now()): boolean {
   if (!hasData) return false;
   if (meta.bannerSnoozedUntil && now < meta.bannerSnoozedUntil) return false;
   return meta.lastBackupAt == null || now - meta.lastBackupAt > BACKUP_STALE_MS;

@@ -13,7 +13,7 @@ export function Results({ attemptId }: { attemptId: string }) {
     return (
       <div class="card empty">
         <p>Pokušaj nije pronađen.</p>
-        <button class="btn primary" onClick={() => go({ name: 'history' })}>Historija</button>
+        <button class="btn primary" onClick={() => go({ name: 'history' })}>Istorija</button>
       </div>
     );
   }
@@ -33,7 +33,7 @@ function ResultsView({ a }: { a: Attempt }) {
 
   const copy = async () => {
     const text = buildClaudeExport(a);
-    if (await copyText(text)) toast('Kopirano u clipboard – zalijepi u chat');
+    if (await copyText(text)) toast('Kopirano u clipboard – zalepi u chat');
     else setManual(text);
   };
 
@@ -41,7 +41,7 @@ function ResultsView({ a }: { a: Attempt }) {
     <div>
       <div class="row" style={{ marginBottom: '8px' }}>
         <h1 style={{ margin: 0 }}>{a.name}</h1>
-        <span class={'badge ' + (a.mode === 'exam' ? 'accent' : 'good')}>{a.mode === 'exam' ? 'Ispit' : 'Vježba'}</span>
+        <span class={'badge ' + (a.mode === 'exam' ? 'accent' : 'good')}>{a.mode === 'exam' ? 'Ispit' : 'Vežba'}</span>
         <span class="muted small">{fmtDate(a.finishedAt)}</span>
       </div>
 
@@ -59,18 +59,18 @@ function ResultsView({ a }: { a: Attempt }) {
           </div>
           <div>
             <div><b>{fmtDuration(a.usedSec)}</b>{a.limitSec != null && <span class="muted"> / {fmtDuration(a.limitSec)}</span>}</div>
-            <div class="muted small">utrošeno vrijeme{a.timedOut ? ' (isteklo vrijeme)' : ''}</div>
+            <div class="muted small">utrošeno vreme{a.timedOut ? ' (isteklo vreme)' : ''}</div>
           </div>
           <div>
             <div><b>{a.items.filter((i) => i.isCorrect).length}</b> tačno · <b>{wrong.length}</b> netačno</div>
-            <div class="muted small">{flagged.length} označeno{a.partialCredit ? ' · parcijalni bodovi' : ''}</div>
+            <div class="muted small">{flagged.length} označeno{a.partialCredit ? ' · delimični bodovi' : ''}</div>
           </div>
         </div>
         <div class="row" style={{ marginTop: '16px' }}>
           <button class="btn primary" onClick={copy}>📋 Kopiraj za Claude</button>
-          <button class="btn" disabled={!wrong.length} onClick={() => guardStart(() => startRetryWrong(a, 'practice'))}>Ponovi pogrešne (vježba)</button>
+          <button class="btn" disabled={!wrong.length} onClick={() => guardStart(() => startRetryWrong(a, 'practice'))}>Ponovi pogrešne (vežba)</button>
           <button class="btn" disabled={!wrong.length} onClick={() => guardStart(() => startRetryWrong(a, 'exam'))}>Ponovi pogrešne (ispit)</button>
-          <button class="btn ghost right" onClick={() => go({ name: 'history' })}>Historija</button>
+          <button class="btn ghost right" onClick={() => go({ name: 'history' })}>Istorija</button>
           <button class="btn ghost" onClick={() => go({ name: 'home' })}>Početna</button>
         </div>
       </div>
@@ -87,7 +87,7 @@ function ResultsView({ a }: { a: Attempt }) {
             detail: `${fmtPts(b.correct)}/${b.total} · ${Math.round(b.percent)}%`,
           }))}
         />
-        <p class="small muted" style={{ marginBottom: 0, marginTop: '10px' }}>Okomita crta = prag prolaza ({a.passPercent}%). Zelena = na pragu ili iznad, crvena = ispod.</p>
+        <p class="small muted" style={{ marginBottom: 0, marginTop: '10px' }}>Vertikalna crta = prag prolaza ({a.passPercent}%). Zelena = na pragu ili iznad, crvena = ispod.</p>
       </div>
 
       <div class="card">
@@ -105,7 +105,7 @@ function ResultsView({ a }: { a: Attempt }) {
 
       {manual != null && (
         <Modal title="Kopiraj ručno" wide onClose={() => setManual(null)}>
-          <p class="small muted">Clipboard nije dostupan u ovom pregledniku. Označi tekst (Ctrl+A) i kopiraj (Ctrl+C).</p>
+          <p class="small muted">Clipboard nije dostupan u ovom pregledaču. Označi tekst (Ctrl+A) i kopiraj (Ctrl+C).</p>
           <textarea readOnly rows={16} value={manual} onFocus={(e) => (e.target as HTMLTextAreaElement).select()} />
           <div class="modal-actions"><button class="btn" onClick={() => setManual(null)}>Zatvori</button></div>
         </Modal>

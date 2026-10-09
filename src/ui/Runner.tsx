@@ -40,10 +40,10 @@ function Timer({ s }: { s: Session }) {
   }, []);
 
   const e = elapsed();
-  if (s.limitSec == null) return <span class="timer" title="Proteklo vrijeme">{fmtDuration(e)}</span>;
+  if (s.limitSec == null) return <span class="timer" title="Proteklo vreme">{fmtDuration(e)}</span>;
   const left = Math.max(0, s.limitSec - e);
   return (
-    <span class={'timer' + (left < 300 ? ' low' : '')} title="Preostalo vrijeme" aria-label={`Preostalo vrijeme ${fmtDuration(left)}`}>
+    <span class={'timer' + (left < 300 ? ' low' : '')} title="Preostalo vreme" aria-label={`Preostalo vreme ${fmtDuration(left)}`}>
       {fmtDuration(left)}
     </span>
   );
@@ -134,7 +134,7 @@ export function Runner() {
       title: 'Prekinuti ispit?',
       danger: true,
       confirmLabel: 'Prekini i odbaci',
-      body: <p>Odgovori neće biti sačuvani u historiji.</p>,
+      body: <p>Odgovori neće biti sačuvani u istoriji.</p>,
       onConfirm: abandonSession,
     });
 
@@ -142,7 +142,7 @@ export function Runner() {
     <div class="run-head">
       <div>
         <b>{s.name}</b>{' '}
-        <span class={'badge ' + (s.mode === 'exam' ? 'accent' : 'good')}>{s.mode === 'exam' ? 'Ispit' : 'Vježba'}</span>
+        <span class={'badge ' + (s.mode === 'exam' ? 'accent' : 'good')}>{s.mode === 'exam' ? 'Ispit' : 'Vežba'}</span>
       </div>
       <div class="muted small">{answered}/{s.items.length} odgovoreno{flagged ? ` · ${flagged} označeno` : ''}</div>
       <div class="right row">
@@ -179,17 +179,17 @@ export function Runner() {
           )}
           <div class="qnav">
             <button class="btn" disabled={s.index === 0} onClick={() => setIndex(s.index - 1)}>← Prethodno <span class="kbd">P</span></button>
-            <button class="btn" disabled={s.index >= s.items.length - 1} onClick={() => setIndex(s.index + 1)}>Sljedeće → <span class="kbd">N</span></button>
+            <button class="btn" disabled={s.index >= s.items.length - 1} onClick={() => setIndex(s.index + 1)}>Sledeće → <span class="kbd">N</span></button>
             <button class={'btn' + (it.flagged ? ' primary' : '')} onClick={() => toggleFlag(s.index)} aria-pressed={it.flagged}>
               ⚑ {it.flagged ? 'Označeno' : 'Označi'} <span class="kbd">F</span>
             </button>
             {s.mode === 'practice' && !it.checked && (
-              <button class="btn primary" disabled={!it.selected.length} onClick={() => checkAnswer(s.index)}>Provjeri <span class="kbd">Enter</span></button>
+              <button class="btn primary" disabled={!it.selected.length} onClick={() => checkAnswer(s.index)}>Proveri <span class="kbd">Enter</span></button>
             )}
             {s.index === s.items.length - 1 && <button class="btn primary right" onClick={() => setReview(true)}>Pregled i predaja</button>}
           </div>
           <p class="small muted" style={{ marginTop: '14px', marginBottom: 0 }}>
-            Tipke: <span class="kbd">A</span>–<span class="kbd">H</span> odabir · <span class="kbd">N</span>/<span class="kbd">P</span> sljedeće/prethodno · <span class="kbd">F</span> oznaka
+            Tasteri: <span class="kbd">A</span>–<span class="kbd">H</span> izbor · <span class="kbd">N</span>/<span class="kbd">P</span> sledeće/prethodno · <span class="kbd">F</span> oznaka
             (ako pitanje ima opciju F: <span class="kbd">Shift+F</span>)
           </p>
         </div>
@@ -304,7 +304,7 @@ function Review(props: {
     .filter(({ it }) => (filter === 'unanswered' ? !isAnswered(it) : filter === 'flagged' ? it.flagged : true));
   return (
     <div class="card" style={{ marginTop: '16px' }}>
-      <h2>Pregled prije predaje</h2>
+      <h2>Pregled pre predaje</h2>
       <div class="stat-strip" style={{ marginBottom: '12px' }}>
         <div class="stat"><b>{answered}</b><span>odgovoreno</span></div>
         <div class="stat"><b>{s.items.length - answered}</b><span>neodgovoreno</span></div>

@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { deleteAttempt, go, history } from '../store';
+import { deleteAttempt, go, history, settings } from '../store';
 import type { Attempt } from '../types';
 import { weakAreas } from '../core/stats';
 import { fmtDate, fmtDuration, fmtPercent, fmtPts } from '../core/util';
@@ -17,7 +17,7 @@ export function History() {
 
   return (
     <div>
-      <h1>Historija</h1>
+      <h1>Istorija</h1>
       <Tabs value={tab} onChange={setTab} options={[['attempts', `Pokušaji (${hist.length})`], ['weak', 'Slaba područja']]} />
       {hist.length === 0 && <div class="card empty">Još nema završenih pokušaja.</div>}
 
@@ -32,14 +32,14 @@ export function History() {
           </div>
           <table>
             <thead>
-              <tr><th>Datum</th><th>Ispit</th><th>Mod</th><th>Rezultat</th><th>Status</th><th>Vrijeme</th><th /></tr>
+              <tr><th>Datum</th><th>Ispit</th><th>Mod</th><th>Rezultat</th><th>Status</th><th>Vreme</th><th /></tr>
             </thead>
             <tbody>
               {sorted.map((a) => (
                 <tr key={a.id}>
                   <td class="nowrap">{fmtDate(a.finishedAt)}</td>
                   <td>{a.name}</td>
-                  <td>{a.mode === 'exam' ? 'Ispit' : 'Vježba'}</td>
+                  <td>{a.mode === 'exam' ? 'Ispit' : 'Vežba'}</td>
                   <td class="nowrap">{fmtPts(a.points)}/{a.total} · <b>{fmtPercent(a.percent)}</b></td>
                   <td><span class={'badge ' + (a.passed ? 'good' : 'bad')}>{a.passed ? 'prolaz' : 'pad'}</span></td>
                   <td class="nowrap">{fmtDuration(a.usedSec)}</td>
@@ -75,13 +75,14 @@ export function History() {
 
 function Weak({ by, setBy }: { by: 'topic' | 'lesson'; setBy: (v: 'topic' | 'lesson') => void }) {
   const data = weakAreas(history.value, by);
+  const passMark = settings.value.random.passPercent;
   return (
     <div class="card">
       <div class="row">
         <h2 style={{ margin: 0 }}>Tačnost po {by === 'topic' ? 'temama' : 'lekcijama'}</h2>
         <div class="right"><Tabs value={by} onChange={setBy} options={[['topic', 'Teme'], ['lesson', 'Lekcije']]} /></div>
       </div>
-      <p class="small muted">Sortirano od najslabijeg. Mini grafikon = tačnost po pokušajima (stariji → noviji, zadnjih 12).</p>
+      <p class="small muted">Sortirano od najslabijeg. Mini grafikon = tačnost po pokušajima (stariji → noviji, poslednjih 12).</p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>{by === 'topic' ? 'Tema' : 'Lekcija'}</th><th style={{ width: '40%' }}>Tačnost</th><th>Odgovoreno</th><th>Trend</th></tr></thead>
@@ -92,7 +93,7 @@ function Weak({ by, setBy }: { by: 'topic' | 'lesson'; setBy: (v: 'topic' | 'les
                 <td>
                   <Bars
                     data={[{ key: w.key, label: '', percent: w.percent, detail: fmtPercent(w.percent) }]}
-                    passPercent={70}
+                    passPercent={passMark}
                     noLabels
                   />
                 </td>
@@ -103,7 +104,7 @@ function Weak({ by, setBy }: { by: 'topic' | 'lesson'; setBy: (v: 'topic' | 'les
           </tbody>
         </table>
       </div>
-      <p class="small muted" style={{ marginBottom: 0 }}>Crvena traka = ispod 70 %.</p>
+      <p class="small muted" style={{ marginBottom: 0 }}>Crvena traka = ispod praga prolaza ({passMark} %).</p>
     </div>
   );
 }

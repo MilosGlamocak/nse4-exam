@@ -4,14 +4,14 @@ Aplikacija nema ugrađenih pitanja. Sva pitanja i fiksni ispiti dolaze iz **pake
 *Biblioteka → Uvoz paketa*. Podržana su dva formata: **JSON** (kanonski) i **CSV** (sekundarni).
 
 Uvoz je **aditivan**: novi ID-evi se dodaju, postojeći se preskaču (ili prepisuju ako uključiš
-"Prepiši"). Nevažeća pitanja se odbacuju pojedinačno, važeća se zadržavaju. Nakon uvoza vidiš izvještaj
-(dodano / preskočeno / prepisano / nevažeće s razlozima).
+"Prepiši"). Nevažeća pitanja se odbacuju pojedinačno, važeća se zadržavaju. Nakon uvoza vidiš izveštaj
+(dodato / preskočeno / prepisano / nevažeće s razlozima).
 
 ---
 
 ## 1. JSON
 
-Datoteka sadrži objekt s ključem `questions` i/ili `exams` (barem jedan od njih).
+Fajl sadrži objekat s ključem `questions` i/ili `exams` (barem jedan od njih).
 
 ```json
 {
@@ -38,8 +38,8 @@ Datoteka sadrži objekt s ključem `questions` i/ili `exams` (barem jedan od nji
       "id": "exam-1",
       "name": "Ispit 1",
       "questionIds": ["dump-0042", "kc-11-03"],
-      "durationMinutes": 105,
-      "passPercent": 70
+      "durationMinutes": 90,
+      "passPercent": 80
     }
   ]
 }
@@ -49,7 +49,7 @@ Datoteka sadrži objekt s ključem `questions` i/ili `exams` (barem jedan od nji
 
 | Polje       | Obavezno | Opis |
 |-------------|----------|------|
-| `pack`      | ne       | Ime paketa (koristi se za "Obriši paket"). Ako nedostaje, uzima se ime datoteke. |
+| `pack`      | ne       | Ime paketa (koristi se za "Obriši paket"). Ako nedostaje, uzima se ime fajla. |
 | `questions` | ne*      | Niz pitanja. |
 | `exams`     | ne*      | Niz fiksnih ispita. |
 
@@ -61,22 +61,22 @@ Datoteka sadrži objekt s ključem `questions` i/ili `exams` (barem jedan od nji
 |---------------|----------|---------|
 | `id`          | da       | Neprazan string, jedinstven i stabilan. |
 | `source`      | da       | `dump` (originalno pitanje iz dumpa, doslovno) · `kc` (Knowledge Check iz zvaničnog PDF-a lekcije) · `quiz` (ATC quiz) · `claude` (pitanje koje je napisao Claude u stilu ispita). |
-| `lesson`      | da       | Cijeli broj 1–16. |
+| `lesson`      | da       | Ceo broj 1–16. |
 | `topic`       | da       | Slobodan tekst (neprazan). |
 | `type`        | da       | `single` (tačno 1 tačan odgovor) ili `multi` (2 ili više tačnih). |
-| `question`    | da       | Tekst pitanja. Prijelomi redova (`\n`) se čuvaju. |
+| `question`    | da       | Tekst pitanja. Prelomi redova (`\n`) se čuvaju. |
 | `options`     | da       | Niz `{ "id": string, "text": string }`, 2–8 opcija, `id`-evi jedinstveni unutar pitanja. |
 | `correct`     | da       | Niz `id`-eva opcija. Svaki mora postojati u `options`, bez duplikata. Dužina mora odgovarati `type`: `single` → 1, `multi` → ≥ 2. |
-| `explanation` | ne       | Kratko objašnjenje (prikazuje se u Vježbi i u rezultatima). |
+| `explanation` | ne       | Kratko objašnjenje (prikazuje se u Vežbi i u rezultatima). |
 | `image`       | ne       | Exhibit kao `data:image/...` URI (png, jpeg, gif, webp, svg+xml, bmp). Prikazuje se iznad opcija, klik uvećava. |
 
 Napomene:
 
 * UI ispisuje **"Choose one"** odnosno **"Choose two" / "Choose three" …** prema `correct.length`.
-* ID-evi opcija mogu biti bilo koji stringovi (`"A"`, `"opt1"`…). Pri prikazu se opcije miješaju, a
-  slova se uvijek iznova dodjeljuju kao A, B, C… (mapiranje se pamti, rezultati ostaju tačni).
-* `multi` je tačno samo ako je odabran **tačno** cijeli skup tačnih odgovora (parcijalni bodovi su
-  opcija u Postavkama, zadano isključena: bodovi = max(0, (pogođeni − promašeni) / broj tačnih)).
+* ID-evi opcija mogu biti bilo koji stringovi (`"A"`, `"opt1"`…). Pri prikazu se opcije mešaju, a
+  slova se uvek iznova dodeljuju kao A, B, C… (mapiranje se pamti, rezultati ostaju tačni).
+* `multi` je tačno samo ako je izabran **tačno** ceo skup tačnih odgovora (delimični bodovi su
+  opcija u Podešavanjima, podrazumevano isključena: bodovi = max(0, (pogođeni − promašeni) / broj tačnih)).
 
 ### Ispit (fiksni, "Exam 1..5")
 
@@ -84,7 +84,7 @@ Napomene:
 |-------------------|----------|---------|
 | `id`              | da       | Jedinstven neprazan string. |
 | `name`            | da       | Prikazani naziv. |
-| `questionIds`     | da       | Neprazan niz ID-eva pitanja, bez duplikata. ID-evi ne moraju već postojati (mogu doći iz drugog paketa); upozorenje se prikaže u izvještaju, a na kartici ispita "n/m pitanja dostupno". |
+| `questionIds`     | da       | Neprazan niz ID-eva pitanja, bez duplikata. ID-evi ne moraju već postojati (mogu doći iz drugog paketa); upozorenje se prikaže u izveštaju, a na kartici ispita "n/m pitanja dostupno". |
 | `durationMinutes` | da       | Broj > 0. |
 | `passPercent`     | da       | Broj 0–100. |
 
@@ -92,36 +92,36 @@ Napomene:
 
 ## 2. CSV
 
-* UTF-8 (BOM je dozvoljen), separator **tačka-zarez** `;`, jedan zapis po retku.
+* UTF-8 (BOM je dozvoljen), separator **tačka-zapeta** `;`, jedan zapis po retku.
 * Prvi red je **header i mora biti tačno**:
 
   ```
   id;source;lesson;topic;question;A;B;C;D;E;F;correct;explanation
   ```
 
-* Polja se dijele običnim `split(";")` — tačka-zarez se ne smije pojaviti unutar polja. Zapisi ne
-  mogu sadržavati prijelom reda. Navodnici nemaju posebno značenje.
+* Polja se dele običnim `split(";")` — tačka-zapeta se ne sme pojaviti unutar polja. Zapisi ne
+  mogu sadržavati prelom reda. Navodnici nemaju posebno značenje.
 * Redovi s pogrešnim brojem polja (nije 13) se odbacuju i prijavljuju (s brojem retka); ostali se uvoze.
 * Prazni redovi se ignorišu.
 * `correct` su slova opcija odvojena zarezom, npr. `B` ili `B,D`. Mala slova se prihvataju.
   `type` se izvodi iz broja tačnih: 1 → `single`, ≥ 2 → `multi`.
 * Prazne kolone opcija (`A`–`F`) se ignorišu; ID opcije je slovo kolone.
 * `explanation` je opcionalna (može biti prazna).
-* CSV nema exhibita ni ispita. Ime paketa je ime datoteke.
+* CSV nema exhibita ni ispita. Ime paketa je ime fajla.
 * Isti kriteriji validacije kao za JSON (npr. `lesson` 1–16, `source` iz liste, `correct` mora
   referencirati popunjenu opciju).
 
-Primjer:
+Primer:
 
 ```
 id;source;lesson;topic;question;A;B;C;D;E;F;correct;explanation
-kc-11-03;kc;11;IPsec VPN;Primjer pitanja?;prvi;drugi;treci;;;;B;Kratko objašnjenje
-kc-11-04;kc;11;IPsec VPN;Primjer s dva tačna;a;b;c;d;;;A,D;
+kc-11-03;kc;11;IPsec VPN;Primer pitanja?;prvi;drugi;treci;;;;B;Kratko objašnjenje
+kc-11-04;kc;11;IPsec VPN;Primer s dva tačna;a;b;c;d;;;A,D;
 ```
 
 ---
 
-## 3. Primjeri datoteka
+## 3. Primeri fajlova
 
 * `sample-pack.json` – 6 izmišljenih placeholder pitanja (`source: "claude"` i još po jedno `kc`,
   `quiz`, `dump` radi testiranja filtera): single, 6-opcija, multi, multi (3), exhibit single i exhibit multi,
@@ -134,6 +134,6 @@ Ovo **nisu** stvarna NSE4 pitanja.
 
 ## 4. Backup (različito od paketa)
 
-*Postavke → Preuzmi backup* pravi JSON s `"app": "nse4-exam-backup"` koji sadrži pitanja, ispite,
-historiju i postavke. Vraća se samo kroz *Postavke → Vrati iz backupa* (zamjenjuje sve podatke) i
+*Podešavanja → Preuzmi backup* pravi JSON s `"app": "nse4-exam-backup"` koji sadrži pitanja, ispite,
+istoriju i postavke. Vraća se samo kroz *Podešavanja → Vrati iz backupa* (zamenjuje sve podatke) i
 ne može se uvesti kao paket.

@@ -84,7 +84,7 @@ const pack = {
     {
       id: 'sample-exam-1', name: 'Sample ispit (placeholder)',
       questionIds: ['sample-001', 'sample-002', 'sample-003', 'sample-004', 'sample-005', 'sample-006'],
-      durationMinutes: 10, passPercent: 70,
+      durationMinutes: 10, passPercent: 80,
     },
   ],
 };

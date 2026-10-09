@@ -47,11 +47,11 @@ export function parseJsonPack(text: string, fileName: string): ParsedPack {
     throw new Error('JSON nije ispravan: ' + (e as Error).message);
   }
   if (typeof data !== 'object' || data === null || Array.isArray(data)) {
-    throw new Error('Korijen JSON-a mora biti objekt sa "questions" i/ili "exams"');
+    throw new Error('Koren JSON-a mora biti objekat sa "questions" i/ili "exams"');
   }
   const d = data as Record<string, unknown>;
   if (d.app === 'nse4-exam-backup') {
-    throw new Error('Ovo je backup datoteka. Koristi Postavke → "Vrati iz backupa".');
+    throw new Error('Ovo je backup fajl. Koristi Podešavanja → "Vrati iz backupa".');
   }
   if (d.questions === undefined && d.exams === undefined) {
     throw new Error('Paket ne sadrži ni "questions" ni "exams"');
@@ -125,7 +125,7 @@ export function applyPack(
     }
     const q = res.value;
     if (seenInFile.has(q.id)) {
-      report.invalid.push({ kind: 'question', ref: `${q.id} (${lineRef})`, reasons: ['duplikat ID unutar iste datoteke'] });
+      report.invalid.push({ kind: 'question', ref: `${q.id} (${lineRef})`, reasons: ['duplikat ID unutar istog fajla'] });
       return;
     }
     seenInFile.add(q.id);
@@ -160,7 +160,7 @@ export function applyPack(
     }
     const e = res.value;
     if (seenExam.has(e.id)) {
-      report.invalid.push({ kind: 'exam', ref: e.id, reasons: ['duplikat ID ispita unutar iste datoteke'] });
+      report.invalid.push({ kind: 'exam', ref: e.id, reasons: ['duplikat ID ispita unutar istog fajla'] });
       return;
     }
     seenExam.add(e.id);

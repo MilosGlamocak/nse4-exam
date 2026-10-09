@@ -28,7 +28,7 @@ export function buildClaudeExport(a: Attempt): string {
   out.push(
     `NSE4 rezultat: ${a.name} | mod: ${a.mode === 'exam' ? 'exam' : 'practice'} | ` +
       `${Math.round(a.points * 100) / 100}/${a.total} (${fmtPercent(a.percent)}) | ` +
-      `${a.passed ? 'PROLAZ' : 'PAD'} (prag ${a.passPercent}%) | vrijeme ${fmtDuration(a.usedSec)}${limit}`,
+      `${a.passed ? 'PROLAZ' : 'PAD'} (prag ${a.passPercent}%) | vreme ${fmtDuration(a.usedSec)}${limit}`,
   );
   const bt = breakdown(a.items, 'topic')
     .map((b) => `${b.label} ${Math.round(b.correct * 100) / 100}/${b.total} (${Math.round(b.percent)}%)`)
@@ -43,7 +43,7 @@ export function buildClaudeExport(a: Attempt): string {
   if (!picked.length) {
     out.push('Nema pogresnih ni oznacenih pitanja.');
   } else {
-    out.push(`Pogresna/oznacena pitanja (${picked.length}). Slova opcija odgovaraju redoslijedu u kojem sam ih vidio.`);
+    out.push(`Pogresna/oznacena pitanja (${picked.length}). Slova opcija odgovaraju redosledu u kojem sam ih vidio.`);
     out.push('');
     picked.forEach((it, i) => {
       out.push(itemBlock(it, i + 1));

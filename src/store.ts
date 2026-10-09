@@ -13,6 +13,7 @@ import {
 } from './types';
 import { initStorage, loadKey, lsRead, lsWrite, removeKey, saveKey } from './storage';
 import { applyPack, parsePack, type ImportReport } from './core/importer';
+import { BUNDLED } from './bundled';
 import { buildSession, finishSession, pickRandom } from './core/session';
 import { makeBackup, parseBackup, type AppData } from './core/backup';
 import { scoreAnswer } from './core/scoring';
@@ -34,6 +35,8 @@ export const settings = signal<Settings>(DEFAULT_SETTINGS);
 export const meta = signal<Meta>(DEFAULT_META);
 export const session = signal<Session | null>(null);
 export const ready = signal(false);
+/** one-line message shown after bundled packs were auto-imported */
+export const bundledNotice = signal<string | null>(null);
 
 export function go(r: Route): void {
   route.value = r;
@@ -78,6 +81,9 @@ export async function boot(): Promise<void> {
   const mirror = lsRead<Session>('session');
   let live: Session | null = sess ?? null;
   if (mirror && (!live || (mirror.updatedAt ?? 0) > (live.updatedAt ?? 0))) live = mirror;
+  // saved settings still holding the old built-in random-exam defaults (60 q / 105 min / 70 %) follow the new ones
+  const r = s.random;
+  if (r && r.count === 60 && r.minutes === 105 && r.passPercent === 70) s.random = { ...DEFAULT_SETTINGS.random };
   batch(() => {
     questions.value = q;
     exams.value = e;
@@ -122,10 +128,47 @@ export async function boot(): Promise<void> {
     } else debounced('session', v, 400);
   });
 
+  importBundled(false);
+
   const flush = () => flushPending();
   window.addEventListener('pagehide', flush);
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') flush();
+  });
+}
+
+// ---------- bundled packs ----------
+
+/**
+ * Imports packs baked into the HTML. `force` = also those already imported/deleted before
+ * (the "restore built-in packs" button). Overwrites questions with the same id: the bundled
+ * file is the source of truth for its own pack.
+ */
+export function importBundled(force: boolean): void {
+  const seen = new Set(force ? [] : meta.value.seenBundled);
+  let lib = { questions: questions.value, exams: exams.value };
+  let added = 0;
+  const names: string[] = [];
+  for (const b of BUNDLED) {
+    if (seen.has(b.pack)) continue;
+    try {
+      const out = applyPack(lib, parsePack(b.text, b.file), { overwrite: true });
+      lib = out.lib;
+      added += out.report.addedQuestions + out.report.overwrittenQuestions;
+      if (out.report.invalid.length) console.warn(`[${b.file}] nevažeći zapisi:`, out.report.invalid);
+    } catch (e) {
+      console.warn(`[${b.file}] uvoz nije uspeo:`, e);
+      continue;
+    }
+    seen.add(b.pack);
+    names.push(b.pack);
+  }
+  if (!names.length) return;
+  batch(() => {
+    questions.value = lib.questions;
+    exams.value = lib.exams;
+    meta.value = { ...meta.value, seenBundled: [...new Set([...meta.value.seenBundled, ...names])] };
+    bundledNotice.value = `Ugrađeni paketi učitani: ${names.join(', ')} (${added} pitanja).`;
   });
 }
 

@@ -108,6 +108,8 @@ export interface Settings {
 export interface Meta {
   lastBackupAt: number | null;
   bannerSnoozedUntil: number | null;
+  /** names of bundled packs that were already auto-imported once */
+  seenBundled: string[];
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -115,7 +117,7 @@ export const DEFAULT_SETTINGS: Settings = {
   partialCredit: false,
   shuffleQuestions: true,
   shuffleOptions: true,
-  random: { count: 60, minutes: 105, passPercent: 70 },
+  random: { count: 55, minutes: 90, passPercent: 80 },
 };
 
-export const DEFAULT_META: Meta = { lastBackupAt: null, bannerSnoozedUntil: null };
+export const DEFAULT_META: Meta = { lastBackupAt: null, bannerSnoozedUntil: null, seenBundled: [] };

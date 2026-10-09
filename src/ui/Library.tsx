@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'preact/hooks';
-import { deletePack, deleteQuestion, exams, importFiles, questions } from '../store';
+import { deletePack, deleteQuestion, exams, importBundled, importFiles, questions } from '../store';
+import { BUNDLED } from '../bundled';
 import type { ImportReport } from '../core/importer';
 import type { Question } from '../types';
 import { SOURCES } from '../types';
@@ -55,10 +56,10 @@ function ImportPanel() {
           void run([...(e.dataTransfer?.files ?? [])]);
         }}
       >
-        <p>Prevuci JSON ili CSV datoteke ovdje, ili:</p>
+        <p>Prevuci JSON ili CSV fajlove ovde, ili:</p>
         <div class="row" style={{ justifyContent: 'center' }}>
           <label class="btn primary" style={{ cursor: 'pointer' }}>
-            {busy ? 'Uvozim…' : 'Odaberi datoteke'}
+            {busy ? 'Uvozim…' : 'Izaberi fajlove'}
             <input
               type="file"
               accept=".json,.csv,.txt,application/json,text/csv"
@@ -70,12 +71,17 @@ function ImportPanel() {
               }}
             />
           </label>
-          <button class="btn" onClick={loadSample}>Učitaj primjer paket</button>
+          <button class="btn" onClick={loadSample}>Učitaj probni paket</button>
+          {BUNDLED.length > 0 && (
+            <button class="btn" onClick={() => { importBundled(true); toast('Ugrađeni paketi vraćeni'); }} title={BUNDLED.map((b) => b.pack).join(', ')}>
+              Vrati ugrađene pakete ({BUNDLED.length})
+            </button>
+          )}
         </div>
       </div>
       <label class="check" style={{ marginTop: '12px' }}>
         <input type="checkbox" checked={overwrite} onChange={(e) => setOverwrite((e.target as HTMLInputElement).checked)} />
-        Prepiši pitanja/ispite koji već postoje (isti ID). Zadano: preskoči.
+        Prepiši pitanja/ispite koji već postoje (isti ID). Podrazumevano: preskoči.
       </label>
       {results.map((r, i) => <Report key={i} r={r} />)}
     </div>
@@ -93,10 +99,10 @@ function Report({ r }: { r: FileResult }) {
       <div class="report">
         <b>{r.file}</b> → paket „{p.pack}“
         <ul>
-          <li>Dodano pitanja: <b>{p.addedQuestions}</b> · preskočeno (postoje): <b>{p.skippedQuestions}</b>
+          <li>Dodato pitanja: <b>{p.addedQuestions}</b> · preskočeno (postoje): <b>{p.skippedQuestions}</b>
             {p.overwrittenQuestions > 0 && <> · prepisano: <b>{p.overwrittenQuestions}</b></>}</li>
           {(p.addedExams + p.skippedExams + p.overwrittenExams > 0) && (
-            <li>Ispiti – dodano: <b>{p.addedExams}</b> · preskočeno: <b>{p.skippedExams}</b>
+            <li>Ispiti – dodato: <b>{p.addedExams}</b> · preskočeno: <b>{p.skippedExams}</b>
               {p.overwrittenExams > 0 && <> · prepisano: <b>{p.overwrittenExams}</b></>}</li>
           )}
           <li>Nevažeći zapisi: <b>{p.invalid.length}</b></li>
@@ -142,11 +148,11 @@ function Packs() {
       <h2>Paketi</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Paket</th><th>Pitanja</th><th>Ispita</th><th>Dodano</th><th /></tr></thead>
+          <thead><tr><th>Paket</th><th>Pitanja</th><th>Ispita</th><th>Dodato</th><th /></tr></thead>
           <tbody>
             {packs.map(([name, p]) => (
               <tr key={name}>
-                <td>{name}</td><td>{p.q}</td><td>{p.e}</td><td class="nowrap">{p.at ? fmtDate(p.at) : '–'}</td>
+                <td>{name}{BUNDLED.some((b) => b.pack === name) && <> <span class="badge accent">ugrađen</span></>}</td><td>{p.q}</td><td>{p.e}</td><td class="nowrap">{p.at ? fmtDate(p.at) : '–'}</td>
                 <td>
                   <button
                     class="btn sm danger"
@@ -155,7 +161,7 @@ function Packs() {
                         title: `Obrisati paket „${name}“?`,
                         danger: true,
                         confirmLabel: 'Obriši paket',
-                        body: <p>Briše se {p.q} pitanja i {p.e} ispita. Historija pokušaja ostaje.</p>,
+                        body: <p>Briše se {p.q} pitanja i {p.e} ispita. Istorija pokušaja ostaje.</p>,
                         onConfirm: () => { deletePack(name); toast('Paket obrisan'); },
                       })
                     }
@@ -248,7 +254,7 @@ function Browser() {
         <div class="pager">
           <button class="btn sm" disabled={cur === 0} onClick={() => setPage(cur - 1)}>← Prethodna</button>
           <span class="small">Stranica {cur + 1} / {pages}</span>
-          <button class="btn sm" disabled={cur >= pages - 1} onClick={() => setPage(cur + 1)}>Sljedeća →</button>
+          <button class="btn sm" disabled={cur >= pages - 1} onClick={() => setPage(cur + 1)}>Sledeća →</button>
         </div>
       )}
     </div>

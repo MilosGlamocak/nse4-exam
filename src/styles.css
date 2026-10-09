@@ -294,3 +294,4 @@ th { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: up
 .empty { text-align: center; padding: 40px 16px; color: var(--text-2); }
 
 .bars.nolabel .barrow { grid-template-columns: 1fr auto; min-width: 150px; }
+.grid > .card + .card { margin-top: 0; }

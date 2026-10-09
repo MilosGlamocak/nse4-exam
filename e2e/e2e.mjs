@@ -22,12 +22,35 @@ page.on('pageerror', (e) => errors.push('PAGEERR ' + e.message));
 await page.goto(APP_URL);
 await page.waitForSelector('h1');
 
+// ---- bundled packs (samples/pack-*.json baked into the HTML) ----
+await page.waitForSelector('.banner.good');
+ok(/Ugrađeni paketi učitani/.test(await page.textContent('.banner.good')), 'bundled packs auto-import on first run');
+await page.click('nav >> text=Biblioteka');
+ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (147)'), 'bundled: 147 questions (95+9+43)');
+ok((await page.locator('.badge:text-is("ugrađen")').count()) === 3, 'bundled packs are badged');
+await page.waitForTimeout(500);
+await page.reload(); await page.waitForSelector('h1');
+await page.click('nav >> text=Biblioteka');
+ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (147)'), 'bundled: no duplicates after reload');
+await page.click('tr:has-text("knowledge-checks") >> button:has-text("Obriši")');
+await page.click('.modal button.danger');
+await page.waitForTimeout(500);
+await page.reload(); await page.waitForSelector('h1');
+await page.click('nav >> text=Biblioteka');
+ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (104)'), 'bundled: deleted pack stays deleted after reload');
+await page.click('button:has-text("Vrati ugrađene pakete")');
+ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (147)'), 'bundled: restore button brings it back');
+// start the rest of the scenarios from an empty library
+await page.click('nav >> text=Podešavanja');
+await page.click('button:has-text("Obriši sve")'); await page.click('.modal button.danger');
+await page.click('nav >> text=Biblioteka');
+
 // ---- import via file chooser ----
 await page.click('nav >> text=Biblioteka');
 const upload = async (f) => { await page.setInputFiles('input[type=file][multiple]', f); await page.waitForTimeout(150); };
 await upload(`${P}/sample-pack.json`);
 let rep = await page.textContent('.report');
-ok(/Dodano pitanja: 6/.test(rep) && /Ispiti – dodano: 1/.test(rep), 'JSON import adds 6 questions + 1 exam');
+ok(/Dodato pitanja: 6/.test(rep) && /Ispiti – dodato: 1/.test(rep), 'JSON import adds 6 questions + 1 exam');
 await upload(`${P}/sample-pack.json`);
 rep = await page.textContent('.report');
 ok(/preskočeno \(postoje\): 6/.test(rep), 're-import skips existing');
@@ -37,7 +60,7 @@ rep = await page.textContent('.report');
 ok(/prepisano: 6/.test(rep), 'overwrite replaces');
 await page.uncheck('text=Prepiši pitanja');
 await upload(`${P}/sample-pack.csv`);
-ok(/Dodano pitanja: 2/.test(await page.textContent('.report')), 'CSV (with BOM) import adds 2');
+ok(/Dodato pitanja: 2/.test(await page.textContent('.report')), 'CSV (with BOM) import adds 2');
 
 const bad = `${S}/bad.json`;
 writeFileSync(bad, JSON.stringify({ pack: 'bad', questions: [
@@ -47,12 +70,12 @@ writeFileSync(bad, JSON.stringify({ pack: 'bad', questions: [
 ]}));
 await upload(bad);
 rep = await page.textContent('.report');
-ok(/Dodano pitanja: 1/.test(rep) && /Nevažeći zapisi: 2/.test(rep), 'invalid questions rejected individually, valid kept');
+ok(/Dodato pitanja: 1/.test(rep) && /Nevažeći zapisi: 2/.test(rep), 'invalid questions rejected individually, valid kept');
 const badCsv = `${S}/bad.csv`;
 writeFileSync(badCsv, 'id;source;lesson;topic;question;A;B;C;D;E;F;correct;explanation\nc1;dump;1;T;Q;a;b;;;;;A;\nc2;dump;1;T;too;few\n');
 await upload(badCsv);
 rep = await page.textContent('.report');
-ok(/Dodano pitanja: 1/.test(rep) && /Nevažeći zapisi: 1/.test(rep), 'CSV wrong field count reported');
+ok(/Dodato pitanja: 1/.test(rep) && /Nevažeći zapisi: 1/.test(rep), 'CSV wrong field count reported');
 const notPack = `${S}/nope.json`; writeFileSync(notPack, '{broken');
 await upload(notPack);
 ok(/JSON nije ispravan/.test(await page.textContent('.banner.bad')), 'broken JSON reports fatal error');
@@ -108,7 +131,7 @@ ok(hero.includes('100%') && hero.includes('PROLAZ'), 'shuffled answers all corre
 
 // ---- practice mode ----
 await page.click('button:has-text("Početna")');
-await page.click('.exam-card button:has-text("Vježba")');
+await page.click('.exam-card button:has-text("Vežba")');
 await page.waitForSelector('.run-head');
 ok((await page.textContent('.qhead')).includes('Lekcija'), 'practice shows lesson/topic');
 await page.keyboard.press('a');
@@ -120,12 +143,12 @@ await page.click('.run-head >> text=Predaj');
 await page.click('.modal button.primary');
 await page.waitForSelector('.score-big');
 // retry wrong
-const wrongBtn = page.locator('button:has-text("Ponovi pogrešne (vježba)")');
+const wrongBtn = page.locator('button:has-text("Ponovi pogrešne (vežba)")');
 if (await wrongBtn.isEnabled()) { await wrongBtn.click(); await page.waitForSelector('.run-head'); ok(true, 'retry wrong starts a session'); await page.click('.run-head >> text=Prekini'); await page.click('.modal button.danger'); }
 
 // ---- partial credit ----
-await page.click('nav >> text=Postavke');
-await page.check('text=Parcijalni bodovi');
+await page.click('nav >> text=Podešavanja');
+await page.check('text=Delimični bodovi');
 await page.click('nav >> text=Početna');
 await page.click('.exam-card button.primary');
 await page.waitForSelector('.run-head');
@@ -137,7 +160,7 @@ for (let i = 0; i < n; i++) {
 await page.click('.run-head >> text=Predaj'); await page.click('.modal button.primary');
 await page.waitForSelector('.score-big');
 ok((await page.textContent('.score-hero')).includes('0,5 / 6') || (await page.textContent('.score-hero')).includes('0.5 / 6'), 'partial credit gives 0.5 for 1/2 multi: ' + (await page.textContent('.score-hero')).replace(/\s+/g,' '));
-await page.click('nav >> text=Postavke'); await page.uncheck('text=Parcijalni bodovi');
+await page.click('nav >> text=Podešavanja'); await page.uncheck('text=Delimični bodovi');
 
 // ---- custom exam ----
 await page.click('nav >> text=Početna');
@@ -151,7 +174,7 @@ ok((await page.locator('.navcell').count()) === 2, 'custom exam has 2 questions'
 await page.click('.run-head >> text=Prekini'); await page.click('.modal button.danger');
 
 // ---- backup export / restore ----
-await page.click('nav >> text=Postavke');
+await page.click('nav >> text=Podešavanja');
 const [dl] = await Promise.all([page.waitForEvent('download'), page.click('button:has-text("Preuzmi backup")')]);
 const bk = `${S}/backup.json`; await dl.saveAs(bk);
 const bj = JSON.parse(readFileSync(bk, 'utf8'));
@@ -159,11 +182,11 @@ ok(bj.app === 'nse4-exam-backup' && bj.questions.length === 8 && bj.history.leng
 await page.click('button:has-text("Obriši sve")'); await page.click('.modal button.danger');
 await page.click('nav >> text=Biblioteka');
 ok(!(await page.textContent('main')).includes('Pitanja ('), 'wipe empties library');
-await page.click('nav >> text=Postavke');
+await page.click('nav >> text=Podešavanja');
 await page.setInputFiles('input[type=file]:not([multiple])', bk);
 await page.click('.modal button.danger');
 await page.waitForTimeout(200);
-await page.click('nav >> text=Historija');
+await page.click('nav >> text=Istorija');
 ok((await page.locator('tbody tr').count()) >= 3, 'restore brings history back');
 
 // ---- persistence across reload ----
@@ -173,7 +196,7 @@ await page.click('nav >> text=Biblioteka');
 ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (8)'), 'data persists after reload');
 
 // ---- themes + mobile screenshots ----
-await page.click('nav >> text=Postavke');
+await page.click('nav >> text=Podešavanja');
 await page.selectOption('select >> nth=0', 'dark');
 await page.click('nav >> text=Početna');
 await page.click('.exam-card button.primary'); await page.waitForSelector('.run-head');
@@ -184,7 +207,7 @@ await page.screenshot({ path: S + '/shots/mobile-run.png', fullPage: true });
 const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
 ok(!overflow, 'no horizontal overflow at 390px');
 await page.click('.run-head >> text=Prekini'); await page.click('.modal button.danger');
-await page.click('nav >> text=Historija'); await page.click('text=Slaba područja');
+await page.click('nav >> text=Istorija'); await page.click('text=Slaba područja');
 await page.screenshot({ path: S + '/shots/mobile-weak.png', fullPage: true });
 ok(errors.length === 0, 'no console errors ' + JSON.stringify(errors));
 console.log(fails ? `${fails} FAILURES` : 'ALL OK');

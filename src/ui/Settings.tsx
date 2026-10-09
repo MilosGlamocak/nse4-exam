@@ -19,8 +19,8 @@ export function SettingsPage() {
     askConfirm({
       title: 'Vratiti iz backupa?',
       danger: true,
-      confirmLabel: 'Zamijeni sve podatke',
-      body: <p>Svi trenutni podaci (pitanja, ispiti, historija, postavke) bit će <b>zamijenjeni</b> sadržajem datoteke „{file.name}“.</p>,
+      confirmLabel: 'Zameni sve podatke',
+      body: <p>Svi trenutni podaci (pitanja, ispiti, istorija, postavke) biće <b>zamenjeni</b> sadržajem fajla „{file.name}“.</p>,
       onConfirm: () => {
         try {
           const r = restoreBackup(text);
@@ -34,22 +34,22 @@ export function SettingsPage() {
 
   return (
     <div>
-      <h1>Postavke</h1>
+      <h1>Podešavanja</h1>
 
       <div class="card stack">
         <h2>Izgled</h2>
         <label class="field" style={{ maxWidth: '220px' }}><span>Tema</span>
           <select value={s.theme} onChange={(e) => set({ theme: (e.target as HTMLSelectElement).value as Settings['theme'] })}>
             <option value="auto">Automatski (sistem)</option>
-            <option value="light">Svijetla</option>
+            <option value="light">Svetla</option>
             <option value="dark">Tamna</option>
           </select>
         </label>
       </div>
 
       <div class="card stack">
-        <h2>Nasumični ispit – zadane vrijednosti</h2>
-        <p class="small muted">Provjeri stvarne vrijednosti na službenoj stranici ispita i podesi ovdje.</p>
+        <h2>Nasumični ispit – podrazumevane vrednosti</h2>
+        <p class="small muted">Proveri stvarne vrednosti na zvaničnoj stranici ispita i podesi ovde.</p>
         <div class="row">
           <label class="field"><span>Broj pitanja</span>
             <input type="number" min={1} value={s.random.count} onChange={(e) => setRandom({ count: num(e, 1) })} /></label>
@@ -61,32 +61,32 @@ export function SettingsPage() {
       </div>
 
       <div class="card stack">
-        <h2>Bodovanje i redoslijed</h2>
+        <h2>Bodovanje i redosled</h2>
         <label class="check">
           <input type="checkbox" checked={s.partialCredit} onChange={(e) => set({ partialCredit: (e.target as HTMLInputElement).checked })} />
-          Parcijalni bodovi za multi pitanja (zadano isključeno)
+          Delimični bodovi za multi pitanja (podrazumevano isključeno)
         </label>
         <p class="small muted" style={{ margin: 0 }}>
-          Isključeno: multi pitanje je tačno samo ako je odabran tačno cijeli skup tačnih odgovora. Uključeno: bodovi = (pogođeni − promašeni) / broj tačnih, minimum 0.
+          Isključeno: multi pitanje je tačno samo ako je izabran tačno ceo skup tačnih odgovora. Uključeno: bodovi = (pogođeni − promašeni) / broj tačnih, minimum 0.
           Važi za nove pokušaje.
         </p>
         <label class="check">
           <input type="checkbox" checked={s.shuffleQuestions} onChange={(e) => set({ shuffleQuestions: (e.target as HTMLInputElement).checked })} />
-          Nasumičan redoslijed pitanja
+          Nasumičan redosled pitanja
         </label>
         <label class="check">
           <input type="checkbox" checked={s.shuffleOptions} onChange={(e) => set({ shuffleOptions: (e.target as HTMLInputElement).checked })} />
-          Nasumičan redoslijed opcija (slova se uvijek prikazuju A, B, C…)
+          Nasumičan redosled opcija (slova se uvek prikazuju A, B, C…)
         </label>
-        <div><button class="btn sm" onClick={() => set({ ...DEFAULT_SETTINGS, theme: s.theme })}>Vrati zadane postavke</button></div>
+        <div><button class="btn sm" onClick={() => set({ ...DEFAULT_SETTINGS, theme: s.theme })}>Vrati podrazumevana podešavanja</button></div>
       </div>
 
       <div class="card stack">
         <h2>Backup</h2>
         <p class="small muted" style={{ margin: 0 }}>
-          Podaci su spremljeni u ovom pregledniku ({storageKind.value}) i mogu nestati (čišćenje podataka, drugi preglednik/profil). Backup sadrži pitanja, ispite, historiju i postavke.
+          Podaci su sačuvani u ovom pregledaču ({storageKind.value}) i mogu nestati (čišćenje podataka, drugi pregledač/profil). Backup sadrži pitanja, ispite, istoriju i postavke.
         </p>
-        <p style={{ margin: 0 }}>Zadnji backup: <b>{meta.value.lastBackupAt ? fmtDate(meta.value.lastBackupAt) : 'nikad'}</b></p>
+        <p style={{ margin: 0 }}>Poslednji backup: <b>{meta.value.lastBackupAt ? fmtDate(meta.value.lastBackupAt) : 'nikad'}</b></p>
         <div class="row">
           <button class="btn primary" onClick={() => { exportBackup(); toast('Backup preuzet'); }}>Preuzmi backup</button>
           <label class="btn" style={{ cursor: 'pointer' }}>
@@ -106,15 +106,15 @@ export function SettingsPage() {
             class="btn danger"
             onClick={() =>
               askConfirm({
-                title: 'Obrisati historiju?',
+                title: 'Obrisati istoriju?',
                 danger: true,
-                confirmLabel: 'Obriši historiju',
-                body: <p>Svi završeni pokušaji bit će obrisani.</p>,
-                onConfirm: () => { history.value = []; toast('Historija obrisana'); },
+                confirmLabel: 'Obriši istoriju',
+                body: <p>Svi završeni pokušaji biće obrisani.</p>,
+                onConfirm: () => { history.value = []; toast('Istorija obrisana'); },
               })
             }
           >
-            Obriši historiju
+            Obriši istoriju
           </button>
           <button
             class="btn danger"
@@ -123,7 +123,7 @@ export function SettingsPage() {
                 title: 'Obrisati SVE podatke?',
                 danger: true,
                 confirmLabel: 'Obriši sve',
-                body: <p>Pitanja, ispiti, historija i postavke bit će trajno obrisani. Preporuka: prvo preuzmi backup.</p>,
+                body: <p>Pitanja, ispiti, istorija i postavke biće trajno obrisani. Preporuka: prvo preuzmi backup.</p>,
                 onConfirm: () => { wipeAll(); go({ name: 'home' }); toast('Sve obrisano'); },
               })
             }

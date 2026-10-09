@@ -7,7 +7,7 @@ import samplePack from '../../sample-pack.json?raw';
 export function loadSample(): void {
   const r = importText(samplePack, 'sample-pack.json', false);
   if (r.error) toast('Greška: ' + r.error);
-  else toast(`Primjer učitan: ${r.report!.addedQuestions} pitanja, ${r.report!.addedExams} ispit`);
+  else toast(`Probni paket učitan: ${r.report!.addedQuestions} pitanja, ${r.report!.addedExams} ispit`);
 }
 
 export function Home() {
@@ -43,15 +43,15 @@ export function Home() {
       {qs.length === 0 && (
         <div class="card empty" style={{ marginTop: '16px' }}>
           <h2>Biblioteka je prazna</h2>
-          <p>Uvezi paket pitanja (JSON ili CSV) ili učitaj mali primjer da isprobaš sve funkcije.</p>
+          <p>Uvezi paket pitanja (JSON ili CSV) ili učitaj mali primer da isprobaš sve funkcije.</p>
           <div class="row" style={{ justifyContent: 'center' }}>
             <button class="btn primary" onClick={() => go({ name: 'library' })}>Uvezi paket</button>
-            <button class="btn" onClick={loadSample}>Učitaj primjer paket</button>
+            <button class="btn" onClick={loadSample}>Učitaj probni paket</button>
           </div>
         </div>
       )}
 
-      <div class="section-title"><h2>Fiksni ispiti</h2><span class="muted small">definirani u paketima</span></div>
+      <div class="section-title"><h2>Fiksni ispiti</h2><span class="muted small">definisani u paketima</span></div>
       {ex.length === 0 ? (
         <p class="muted">Nema fiksnih ispita. Paket može sadržavati ključ <span class="mono">exams</span>.</p>
       ) : (
@@ -71,7 +71,7 @@ export function Home() {
                   <p class="small">
                     Najbolji: <b>{fmtPercent(best)}</b> {best >= e.passPercent ? <span class="badge good">prolaz</span> : <span class="badge bad">pad</span>}
                     {' · '}pokušaja: {att.length}
-                    {last && <> · zadnji: {fmtPercent(last.percent)}</>}
+                    {last && <> · poslednji: {fmtPercent(last.percent)}</>}
                   </p>
                 ) : (
                   <p class="small muted">Još nema pokušaja.</p>
@@ -81,8 +81,8 @@ export function Home() {
                 )}
                 <div class="row">
                   <button class="btn primary" disabled={avail === 0} onClick={() => guardStart(() => startFixed(e, 'exam'))}>Ispit</button>
-                  <button class="btn" disabled={avail === 0} onClick={() => guardStart(() => startFixed(e, 'practice'))}>Vježba</button>
-                  {att.length > 0 && <button class="btn ghost" onClick={() => go({ name: 'history' })}>Historija</button>}
+                  <button class="btn" disabled={avail === 0} onClick={() => guardStart(() => startFixed(e, 'practice'))}>Vežba</button>
+                  {att.length > 0 && <button class="btn ghost" onClick={() => go({ name: 'history' })}>Istorija</button>}
                 </div>
               </div>
             );
@@ -90,7 +90,7 @@ export function Home() {
         </div>
       )}
 
-      <div class="section-title"><h2>Nasumični ispit</h2><span class="muted small">pitanja iz cijele biblioteke</span></div>
+      <div class="section-title"><h2>Nasumični ispit</h2><span class="muted small">pitanja iz cele biblioteke</span></div>
       <div class="card">
         <div class="row" style={{ alignItems: 'flex-end' }}>
           <label class="field"><span>Broj pitanja</span>
@@ -103,10 +103,10 @@ export function Home() {
             <input type="number" min={0} max={100} value={pass} onInput={(e) => setPass(+(e.target as HTMLInputElement).value)} />
           </label>
           <button class="btn primary" disabled={!qs.length || cnt < 1} onClick={() => guardStart(() => startRandom('exam', Math.min(cnt, qs.length), min, pass))}>Ispit</button>
-          <button class="btn" disabled={!qs.length || cnt < 1} onClick={() => guardStart(() => startRandom('practice', Math.min(cnt, qs.length), min, pass))}>Vježba</button>
+          <button class="btn" disabled={!qs.length || cnt < 1} onClick={() => guardStart(() => startRandom('practice', Math.min(cnt, qs.length), min, pass))}>Vežba</button>
         </div>
         <p class="small muted" style={{ marginTop: '10px', marginBottom: 0 }}>
-          Zadane vrijednosti mijenjaš u Postavkama. {qs.length > 0 && cnt > qs.length && `U biblioteci ima samo ${qs.length} pitanja.`}
+          Podrazumevane vrednosti menjaš u Podešavanjima. {qs.length > 0 && cnt > qs.length && `U biblioteci ima samo ${qs.length} pitanja.`}
         </p>
       </div>
 

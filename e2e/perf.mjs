@@ -20,7 +20,7 @@ console.log((await page.textContent('h2 >> nth=-1')));
 await t('type search "STRESS TEST QUESTION 77"', async () => { await page.fill('input[type=search]', 'STRESS TEST QUESTION 77'); await page.waitForTimeout(0); await page.waitForSelector('.qrow'); });
 await page.fill('input[type=search]', '');
 await t('click lesson chip filter', async () => { await page.click('.chip:has-text("7") >> nth=0'); await page.waitForSelector('.qrow'); });
-await t('next page x5', async () => { for (let i=0;i<5;i++){ const b=page.locator('button:has-text("Sljedeća")'); if(await b.isEnabled()) await b.click(); } });
+await t('next page x5', async () => { for (let i=0;i<5;i++){ const b=page.locator('button:has-text("Sledeća")'); if(await b.isEnabled()) await b.click(); } });
 await t('open custom builder', async () => { await page.click('nav >> text=Početna'); await page.click('text=Podesi ispit'); await page.waitForSelector('h1:has-text("Prilagođeni")'); });
 await t('toggle 5 lesson chips (live recount)', async () => { for (const l of ['1','2','3','4','5']) await page.click(`.chip:text-is("${l} ${'' }")`).catch(()=>page.click(`.chip >> text=/^${l}\\s/ >> nth=0`)); });
 await page.click('nav >> text=Početna');
@@ -28,7 +28,7 @@ await t('start random 60 exam from 2700 q pool', async () => { await page.locato
 const nq = await page.locator('.navcell').count(); console.log('exam questions:', nq);
 await t('navigate 60 questions with keyboard + answer', async () => { for (let i=0;i<nq;i++){ await page.keyboard.press('a'); await page.keyboard.press('n'); } });
 await t('submit + results render', async () => { await page.click('.run-head >> text=Predaj'); await page.click('.modal button.primary'); await page.waitForSelector('.score-big'); });
-await t('history weak areas', async () => { await page.click('nav >> text=Historija'); await page.click('text=Slaba područja'); await page.waitForSelector('table'); });
+await t('history weak areas', async () => { await page.click('nav >> text=Istorija'); await page.click('text=Slaba područja'); await page.waitForSelector('table'); });
 await page.waitForTimeout(800);
 await t('reload + boot with 2700 q in IndexedDB', async () => { await page.reload(); await page.waitForSelector('.stat-strip'); });
 console.log((await page.textContent('.stat-strip')).replace(/\s+/g,' '));

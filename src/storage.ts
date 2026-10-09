@@ -96,7 +96,7 @@ export async function initStorage(): Promise<void> {
       backend = lsBackend();
     } catch (e2) {
       backend = memBackend();
-      storageError.value = 'Pohrana u pregledniku nije dostupna – podaci će se izgubiti zatvaranjem taba. Redovno radi backup!';
+      storageError.value = 'Čuvanje podataka u pregledaču nije dostupno – podaci će se izgubiti zatvaranjem taba. Redovno radi backup!';
       void e1;
       void e2;
     }
@@ -115,7 +115,7 @@ export async function loadKey<T>(key: string, fallback: T): Promise<T> {
     const v = await backend.get(key);
     return v === undefined || v === null ? fallback : (v as T);
   } catch (e) {
-    storageError.value = 'Čitanje pohrane nije uspjelo: ' + (e as Error).message;
+    storageError.value = 'Čitanje iz skladišta nije uspelo: ' + (e as Error).message;
     return fallback;
   }
 }
@@ -123,9 +123,9 @@ export async function loadKey<T>(key: string, fallback: T): Promise<T> {
 export async function saveKey(key: string, value: unknown): Promise<void> {
   try {
     await backend.set(key, value);
-    if (storageError.value?.startsWith('Spremanje')) storageError.value = null;
+    if (storageError.value?.startsWith('Čuvanje')) storageError.value = null;
   } catch (e) {
-    storageError.value = 'Spremanje nije uspjelo (' + ((e as Error).name || 'greška') + '). Napravi backup i oslobodi prostor.';
+    storageError.value = 'Čuvanje nije uspelo (' + ((e as Error).name || 'greška') + '). Napravi backup i oslobodi prostor.';
   }
 }
 
