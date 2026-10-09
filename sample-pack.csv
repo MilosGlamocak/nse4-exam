@@ -1,0 +1,3 @@
+﻿id;source;lesson;topic;question;A;B;C;D;E;F;correct;explanation
+sample-csv-001;claude;4;Sample: CSV;SAMPLE (placeholder). Pick B.;wrong;right;wrong;;;;B;Placeholder explanation
+sample-csv-002;claude;5;Sample: CSV;SAMPLE (placeholder). Pick A and D.;yes;no;no;yes;;;A,D;

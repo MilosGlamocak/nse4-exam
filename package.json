@@ -1,0 +1,28 @@
+{
+  "name": "nse4-exam",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline NSE4 (FCP - FortiGate Administrator) exam simulator - single HTML file",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && node scripts/finalize.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "gen:big": "node scripts/gen-big-pack.mjs",
+    "e2e": "node e2e/e2e.mjs",
+    "e2e:perf": "npm run gen:big && node e2e/perf.mjs"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
+    "playwright-core": "^1.55.0",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.7",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "@preact/signals": "^2.11.3",
+    "preact": "^11.0.1"
+  }
+}

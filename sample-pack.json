@@ -1,0 +1,216 @@
+{
+  "pack": "sample-pack",
+  "questions": [
+    {
+      "id": "sample-001",
+      "source": "claude",
+      "lesson": 1,
+      "topic": "Sample: single answer",
+      "type": "single",
+      "question": "SAMPLE (placeholder, not an exam question). Which option is marked as the correct one?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option text: this is a wrong choice"
+        },
+        {
+          "id": "B",
+          "text": "Option text: this is the correct choice"
+        },
+        {
+          "id": "C",
+          "text": "Option text: this is a wrong choice"
+        },
+        {
+          "id": "D",
+          "text": "Option text: this is a wrong choice"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation": "Placeholder explanation: option B says it is the correct choice."
+    },
+    {
+      "id": "sample-002",
+      "source": "claude",
+      "lesson": 2,
+      "topic": "Sample: single answer",
+      "type": "single",
+      "question": "SAMPLE (placeholder). This question has SIX options to test the F key (select option F vs. flag).\nPick the option that mentions \"sixth\".",
+      "options": [
+        {
+          "id": "A",
+          "text": "first"
+        },
+        {
+          "id": "B",
+          "text": "second"
+        },
+        {
+          "id": "C",
+          "text": "third"
+        },
+        {
+          "id": "D",
+          "text": "fourth"
+        },
+        {
+          "id": "E",
+          "text": "fifth"
+        },
+        {
+          "id": "F",
+          "text": "sixth (correct)"
+        }
+      ],
+      "correct": [
+        "F"
+      ]
+    },
+    {
+      "id": "sample-003",
+      "source": "claude",
+      "lesson": 3,
+      "topic": "Sample: multiple answers",
+      "type": "multi",
+      "question": "SAMPLE (placeholder). Select the TWO options that contain the word \"yes\".",
+      "options": [
+        {
+          "id": "A",
+          "text": "yes - select me"
+        },
+        {
+          "id": "B",
+          "text": "no"
+        },
+        {
+          "id": "C",
+          "text": "yes - select me too"
+        },
+        {
+          "id": "D",
+          "text": "no"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "explanation": "Placeholder explanation: A and C contain \"yes\". Without partial credit, selecting only one of them scores 0."
+    },
+    {
+      "id": "sample-004",
+      "source": "kc",
+      "lesson": 11,
+      "topic": "Sample: multiple answers",
+      "type": "multi",
+      "question": "SAMPLE (placeholder, source \"kc\" to test source filters). Select the THREE options that are even numbers.",
+      "options": [
+        {
+          "id": "A",
+          "text": "2"
+        },
+        {
+          "id": "B",
+          "text": "7"
+        },
+        {
+          "id": "C",
+          "text": "10"
+        },
+        {
+          "id": "D",
+          "text": "13"
+        },
+        {
+          "id": "E",
+          "text": "4"
+        }
+      ],
+      "correct": [
+        "A",
+        "C",
+        "E"
+      ]
+    },
+    {
+      "id": "sample-005",
+      "source": "quiz",
+      "lesson": 11,
+      "topic": "Sample: exhibit",
+      "type": "single",
+      "question": "SAMPLE (placeholder). Refer to the exhibit (click the image to zoom). What colour is the link between Box 1 and Box 2?",
+      "options": [
+        {
+          "id": "A",
+          "text": "red"
+        },
+        {
+          "id": "B",
+          "text": "blue"
+        },
+        {
+          "id": "C",
+          "text": "green"
+        },
+        {
+          "id": "D",
+          "text": "There is no link"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "explanation": "Placeholder explanation: the exhibit label says \"link: blue\".",
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MjAiIGhlaWdodD0iMjIwIiB2aWV3Qm94PSIwIDAgNTIwIDIyMCI+CjxyZWN0IHdpZHRoPSI1MjAiIGhlaWdodD0iMjIwIiBmaWxsPSIjZjRmNmZhIiBzdHJva2U9IiM5YWE1YjgiLz4KPHRleHQgeD0iMjAiIHk9IjM0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxZDI0MzMiPlNBTVBMRSBFWEhJQklUIChwbGFjZWhvbGRlcik8L3RleHQ+CjxyZWN0IHg9IjMwIiB5PSI3MCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSI5MCIgcng9IjgiIGZpbGw9IiNkYmU0ZjUiIHN0cm9rZT0iIzRhNmZhNSIvPgo8dGV4dCB4PSI5NSIgeT0iMTIwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFkMjQzMyI+Qm94IDE8L3RleHQ+CjxyZWN0IHg9IjM2MCIgeT0iNzAiIHdpZHRoPSIxMzAiIGhlaWdodD0iOTAiIHJ4PSI4IiBmaWxsPSIjZjVlMGRiIiBzdHJva2U9IiNhNTYwNGEiLz4KPHRleHQgeD0iNDI1IiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMWQyNDMzIj5Cb3ggMjwvdGV4dD4KPGxpbmUgeDE9IjE2MCIgeTE9IjExNSIgeDI9IjM2MCIgeTI9IjExNSIgc3Ryb2tlPSIjMWQyNDMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPHRleHQgeD0iMjYwIiB5PSIxMDUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMWQyNDMzIj5saW5rOiBibHVlPC90ZXh0Pgo8L3N2Zz4="
+    },
+    {
+      "id": "sample-006",
+      "source": "dump",
+      "lesson": 16,
+      "topic": "Sample: exhibit",
+      "type": "multi",
+      "question": "SAMPLE (placeholder, source \"dump\" to test source filters). Refer to the exhibit. Select the TWO statements that are true.",
+      "options": [
+        {
+          "id": "A",
+          "text": "The exhibit shows two boxes"
+        },
+        {
+          "id": "B",
+          "text": "The exhibit shows five boxes"
+        },
+        {
+          "id": "C",
+          "text": "The boxes are connected by a line"
+        },
+        {
+          "id": "D",
+          "text": "The exhibit is a photograph"
+        }
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MjAiIGhlaWdodD0iMjIwIiB2aWV3Qm94PSIwIDAgNTIwIDIyMCI+CjxyZWN0IHdpZHRoPSI1MjAiIGhlaWdodD0iMjIwIiBmaWxsPSIjZjRmNmZhIiBzdHJva2U9IiM5YWE1YjgiLz4KPHRleHQgeD0iMjAiIHk9IjM0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxZDI0MzMiPlNBTVBMRSBFWEhJQklUIChwbGFjZWhvbGRlcik8L3RleHQ+CjxyZWN0IHg9IjMwIiB5PSI3MCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSI5MCIgcng9IjgiIGZpbGw9IiNkYmU0ZjUiIHN0cm9rZT0iIzRhNmZhNSIvPgo8dGV4dCB4PSI5NSIgeT0iMTIwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFkMjQzMyI+Qm94IDE8L3RleHQ+CjxyZWN0IHg9IjM2MCIgeT0iNzAiIHdpZHRoPSIxMzAiIGhlaWdodD0iOTAiIHJ4PSI4IiBmaWxsPSIjZjVlMGRiIiBzdHJva2U9IiNhNTYwNGEiLz4KPHRleHQgeD0iNDI1IiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMWQyNDMzIj5Cb3ggMjwvdGV4dD4KPGxpbmUgeDE9IjE2MCIgeTE9IjExNSIgeDI9IjM2MCIgeTI9IjExNSIgc3Ryb2tlPSIjMWQyNDMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPHRleHQgeD0iMjYwIiB5PSIxMDUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMWQyNDMzIj5saW5rOiBibHVlPC90ZXh0Pgo8L3N2Zz4="
+    }
+  ],
+  "exams": [
+    {
+      "id": "sample-exam-1",
+      "name": "Sample ispit (placeholder)",
+      "questionIds": [
+        "sample-001",
+        "sample-002",
+        "sample-003",
+        "sample-004",
+        "sample-005",
+        "sample-006"
+      ],
+      "durationMinutes": 10,
+      "passPercent": 70
+    }
+  ]
+}

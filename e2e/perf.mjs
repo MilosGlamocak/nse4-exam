@@ -1,0 +1,36 @@
+import { chromium } from 'playwright-core';
+// Optional browser tests (need: npm i && npx playwright-core install chromium).
+// Run after 'npm run build'. Opens the built nse4-exam.html via file://.
+import { fileURLToPath } from 'node:url';
+import { mkdtempSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const P = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+const page = await ctx.newPage();
+const errors = []; page.on('pageerror', (e) => errors.push(e.message)); page.on('console', (m) => m.type()==='error' && errors.push(m.text()));
+const t = async (label, fn) => { const s = Date.now(); const r = await fn(); console.log(label.padEnd(46), (Date.now() - s) + ' ms'); return r; };
+await page.goto(`file://${P}/nse4-exam.html`); await page.waitForSelector('h1');
+await page.click('nav >> text=Biblioteka');
+await t('import 1500 q JSON (6.4 MB, 100 exhibits)', async () => { await page.setInputFiles('input[type=file][multiple]', `${P}/test-data/big-pack.json`); await page.waitForSelector('.report'); });
+console.log((await page.textContent('.report')).replace(/\s+/g,' ').slice(0,200));
+await t('import 1200 q CSV', async () => { await page.setInputFiles('input[type=file][multiple]', `${P}/test-data/big-pack.csv`); await page.waitForFunction(() => document.querySelectorAll('.report').length && /csv/.test(document.querySelector('.report').textContent)); });
+console.log((await page.textContent('h2 >> nth=-1')));
+await t('type search "STRESS TEST QUESTION 77"', async () => { await page.fill('input[type=search]', 'STRESS TEST QUESTION 77'); await page.waitForTimeout(0); await page.waitForSelector('.qrow'); });
+await page.fill('input[type=search]', '');
+await t('click lesson chip filter', async () => { await page.click('.chip:has-text("7") >> nth=0'); await page.waitForSelector('.qrow'); });
+await t('next page x5', async () => { for (let i=0;i<5;i++){ const b=page.locator('button:has-text("Sljedeća")'); if(await b.isEnabled()) await b.click(); } });
+await t('open custom builder', async () => { await page.click('nav >> text=Početna'); await page.click('text=Podesi ispit'); await page.waitForSelector('h1:has-text("Prilagođeni")'); });
+await t('toggle 5 lesson chips (live recount)', async () => { for (const l of ['1','2','3','4','5']) await page.click(`.chip:text-is("${l} ${'' }")`).catch(()=>page.click(`.chip >> text=/^${l}\\s/ >> nth=0`)); });
+await page.click('nav >> text=Početna');
+await t('start random 60 exam from 2700 q pool', async () => { await page.locator('.card:has(label:has-text("Broj pitanja")) button.primary').click(); await page.waitForSelector('.run-head'); });
+const nq = await page.locator('.navcell').count(); console.log('exam questions:', nq);
+await t('navigate 60 questions with keyboard + answer', async () => { for (let i=0;i<nq;i++){ await page.keyboard.press('a'); await page.keyboard.press('n'); } });
+await t('submit + results render', async () => { await page.click('.run-head >> text=Predaj'); await page.click('.modal button.primary'); await page.waitForSelector('.score-big'); });
+await t('history weak areas', async () => { await page.click('nav >> text=Historija'); await page.click('text=Slaba područja'); await page.waitForSelector('table'); });
+await page.waitForTimeout(800);
+await t('reload + boot with 2700 q in IndexedDB', async () => { await page.reload(); await page.waitForSelector('.stat-strip'); });
+console.log((await page.textContent('.stat-strip')).replace(/\s+/g,' '));
+console.log('errors:', errors);
+await browser.close();
