@@ -1,15 +1,31 @@
 import { useState } from 'preact/hooks';
-import { deleteAttempt, go, history, settings } from '../store';
+import { deleteAttempt, exportHistory, go, history, importHistory, settings } from '../store';
 import type { Attempt } from '../types';
 import { weakAreas } from '../core/stats';
 import { fmtDate, fmtDuration, fmtPercent, fmtPts } from '../core/util';
-import { Bars, Sparkline, Tabs, askConfirm } from './common';
+import { Bars, Sparkline, Tabs, askConfirm, toast } from './common';
 
 export function History() {
   const [tab, setTab] = useState<'attempts' | 'weak'>('attempts');
   const [by, setBy] = useState<'topic' | 'lesson'>('topic');
   const [examKey, setExamKey] = useState('');
+  const [err, setErr] = useState<string | null>(null);
   const hist = history.value;
+
+  const onImport = async (file: File | undefined) => {
+    if (!file) return;
+    setErr(null);
+    try {
+      const r = importHistory(await file.text());
+      toast(
+        `Uvezeno ${r.added} pokušaja` +
+          (r.skipped ? `, ${r.skipped} već postoji` : '') +
+          (r.dropped ? `, ${r.dropped} nevažećih preskočeno` : ''),
+      );
+    } catch (e) {
+      setErr((e as Error).message);
+    }
+  };
   const keyOf = (a: Attempt) => a.examId ?? `${a.kind}:${a.kind === 'fixed' ? a.name : ''}`;
   const groups = [...new Map(hist.map((a) => [keyOf(a), a.examId ? a.name : { random: 'Nasumični ispiti', custom: 'Prilagođeni ispiti', retry: 'Ponavljanje pogrešnih', fixed: a.name }[a.kind]] as const)).entries()];
   const sorted = hist.filter((a) => !examKey || keyOf(a) === examKey).sort((a, b) => b.finishedAt - a.finishedAt);
@@ -17,9 +33,20 @@ export function History() {
 
   return (
     <div>
-      <h1>Istorija</h1>
+      <div class="row" style={{ marginBottom: '8px' }}>
+        <h1 style={{ margin: 0 }}>Istorija</h1>
+        <div class="right row">
+          <button class="btn sm" disabled={!hist.length} onClick={() => { exportHistory(); toast('Istorija preuzeta'); }}>Izvezi istoriju (JSON)</button>
+          <label class="btn sm" style={{ cursor: 'pointer' }}>
+            Uvezi istoriju…
+            <input type="file" accept=".json,application/json" class="sr"
+              onChange={(e) => { const i = e.target as HTMLInputElement; void onImport(i.files?.[0]).then(() => (i.value = '')); }} />
+          </label>
+        </div>
+      </div>
+      {err && <div class="banner bad" role="alert">{err}</div>}
       <Tabs value={tab} onChange={setTab} options={[['attempts', `Pokušaji (${hist.length})`], ['weak', 'Slaba područja']]} />
-      {hist.length === 0 && <div class="card empty">Još nema završenih pokušaja.</div>}
+      {hist.length === 0 && <div class="card empty">Još nema završenih pokušaja. Ako si ranije izvezao istoriju, uvezi je dugmetom iznad.</div>}
 
       {tab === 'attempts' && hist.length > 0 && (
         <div class="card table-wrap">

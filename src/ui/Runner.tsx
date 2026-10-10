@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  abandonSession, checkAnswer, flushPending, go, questions, session, setElapsed, setIndex, submitSession,
-  toggleFlag, toggleOption,
+  abandonSession, checkAnswer, flushPending, go, pauseSession, questions, resumeSession, session, setElapsed, setIndex,
+  submitSession, toggleFlag, toggleOption,
 } from '../store';
 import type { Question, Session, SessionItem } from '../types';
 import { LETTERS, chooseLabel, fmtDuration } from '../core/util';
@@ -66,7 +66,7 @@ export function Runner() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const { s, qmap, review } = latest.current;
-      if (!s || modalOpen.value > 0) return;
+      if (!s || s.paused || modalOpen.value > 0) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) return;
@@ -112,6 +112,17 @@ export function Runner() {
   const answered = s.items.filter(isAnswered).length;
   const flagged = s.items.filter((i) => i.flagged).length;
 
+  const abandon = () =>
+    askConfirm({
+      title: 'Prekinuti ispit?',
+      danger: true,
+      confirmLabel: 'Prekini i odbaci',
+      body: <p>Odgovori neće biti sačuvani u istoriji.</p>,
+      onConfirm: abandonSession,
+    });
+
+  if (s.paused) return <Paused s={s} answered={answered} onAbandon={abandon} />;
+
   const doSubmit = () => {
     const unanswered = s.items.length - answered;
     askConfirm({
@@ -128,15 +139,10 @@ export function Runner() {
     });
   };
 
-  const exit = () => go({ name: 'home' });
-  const abandon = () =>
-    askConfirm({
-      title: 'Prekinuti ispit?',
-      danger: true,
-      confirmLabel: 'Prekini i odbaci',
-      body: <p>Odgovori neće biti sačuvani u istoriji.</p>,
-      onConfirm: abandonSession,
-    });
+  const pause = () => {
+    pauseSession();
+    go({ name: 'home' });
+  };
 
   const header = (
     <div class="run-head">
@@ -149,7 +155,7 @@ export function Runner() {
         <Timer s={s} />
         {!review && <button class="btn sm" onClick={() => setReview(true)}>Pregled</button>}
         <button class="btn sm primary" onClick={doSubmit}>Predaj</button>
-        <button class="btn sm ghost" onClick={exit} title="Izađi, ispit ostaje sačuvan (sat se pauzira)">Izađi</button>
+        <button class="btn sm" onClick={pause} title="Pauziraj: sat staje, ispit ostaje sačuvan i možeš ga nastaviti kasnije">⏸ Pauziraj</button>
         <button class="btn sm ghost danger" onClick={abandon}>Prekini</button>
       </div>
     </div>
@@ -225,6 +231,25 @@ export function Runner() {
             </>
           )}
         </aside>
+      </div>
+    </div>
+  );
+}
+
+function Paused({ s, answered, onAbandon }: { s: Session; answered: number; onAbandon: () => void }) {
+  const left = s.limitSec != null ? Math.max(0, s.limitSec - s.elapsedSec) : null;
+  return (
+    <div class="card empty" style={{ marginTop: '16px' }}>
+      <h2>Ispit je pauziran</h2>
+      <p>
+        <b>{s.name}</b> · odgovoreno {answered}/{s.items.length}
+        <br />
+        {left != null ? <>preostalo vreme: <b>{fmtDuration(left)}</b></> : <>proteklo vreme: <b>{fmtDuration(s.elapsedSec)}</b></>} (sat stoji)
+      </p>
+      <div class="row" style={{ justifyContent: 'center' }}>
+        <button class="btn primary" onClick={resumeSession}>▶ Nastavi</button>
+        <button class="btn" onClick={() => go({ name: 'home' })}>Početna</button>
+        <button class="btn ghost danger" onClick={onAbandon}>Prekini</button>
       </div>
     </div>
   );

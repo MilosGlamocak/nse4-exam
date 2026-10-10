@@ -195,6 +195,61 @@ await page.reload(); await page.waitForSelector('h1');
 await page.click('nav >> text=Biblioteka');
 ok((await page.textContent('h2 >> nth=-1')).includes('Pitanja (8)'), 'data persists after reload');
 
+// ---- history export / import ----
+await page.click('nav >> text=Istorija');
+const nHist = await page.locator('tbody tr').count();
+const [dlh] = await Promise.all([page.waitForEvent('download'), page.click('button:has-text("Izvezi istoriju")')]);
+const hf = `${S}/history.json`; await dlh.saveAs(hf);
+const hj = JSON.parse(readFileSync(hf, 'utf8'));
+ok(hj.app === 'nse4-exam-history' && hj.history.length === nHist && nHist >= 3, `history export has ${hj.history.length} attempts`);
+await page.click('nav >> text=Podešavanja');
+await page.click('button:has-text("Obriši istoriju")'); await page.click('.modal button.danger');
+await page.click('nav >> text=Istorija');
+ok((await page.locator('tbody tr').count()) === 0, 'history wiped');
+await page.setInputFiles('.row input[type=file]', hf); await page.waitForTimeout(200);
+ok((await page.locator('tbody tr').count()) === nHist, 'history import restores all attempts');
+await page.setInputFiles('.row input[type=file]', hf); await page.waitForTimeout(200);
+ok((await page.locator('tbody tr').count()) === nHist && /već postoji/.test(await page.textContent('.toast')), 're-import does not duplicate');
+await page.setInputFiles('.row input[type=file]', `${P}/sample-pack.json`); await page.waitForTimeout(200);
+ok(/nije izvoz istorije/.test(await page.textContent('.banner.bad')), 'foreign file is rejected');
+
+// ---- pause / resume ----
+await page.click('nav >> text=Početna');
+await page.click('.exam-card button.primary'); await page.waitForSelector('.run-head');
+await page.click('.opt >> nth=0');
+await page.waitForTimeout(2200);
+await page.click('.run-head >> text=Pauziraj');
+await page.waitForSelector('.banner.info');
+ok(/Ispit pauziran/.test(await page.textContent('.banner.info')), 'pause returns to home with paused banner');
+const el1 = await page.evaluate(async () => { await new Promise((r) => setTimeout(r, 300)); return document.querySelector('.banner.info').textContent; });
+await page.waitForTimeout(2500);
+await page.reload(); await page.waitForSelector('h1');
+ok(/Ispit pauziran/.test(await page.textContent('.banner.info')) && (await page.textContent('h1')) === 'Početna', 'paused exam survives reload and stays on home');
+const el2 = await page.textContent('.banner.info');
+ok(el1.replace(/\s+/g, ' ') === el2.replace(/\s+/g, ' '), 'clock is stopped while paused: ' + el2.replace(/\s+/g, ' '));
+await page.click('.banner.info >> text=Nastavi'); await page.waitForSelector('.run-head');
+ok((await page.locator('.navcell.answered').count()) === 1, 'resume keeps answers');
+await page.click('.run-head >> text=Prekini'); await page.click('.modal button.danger');
+
+// ---- PDF export (print) ----
+await page.click('nav >> text=Istorija');
+await page.click('tbody tr:has-text("0 tačno") >> text=Otvori').catch(async () => page.click('tbody tr >> nth=0 >> text=Otvori'));
+await page.waitForSelector('.score-big');
+await page.evaluate(() => { window.__printed = 0; window.print = () => { window.__printed++; }; });
+await page.click('button:has-text("Izvezi PDF")');
+await page.waitForFunction(() => window.__printed === 1);
+const prTxt = await page.textContent('#print-root');
+ok(prTxt.includes('NSE4 / FortiOS 7.6 priprema, projekat Mreze. Ključevi iz dump pitanja su neslužbeni.'), 'print report starts with the context line');
+ok(prTxt.includes('Tvoj odgovor:') && prTxt.includes('Tačan odgovor:') && (await page.locator('#print-root .pr-item').count()) > 0, 'print report lists questions with answers');
+await page.emulateMedia({ media: 'print' });
+ok((await page.locator('.topbar').isHidden()) && (await page.locator('#print-root').isVisible()), 'only the report is visible in print media');
+const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: false });
+writeFileSync(S + '/report.pdf', pdf);
+ok(pdf.length > 2000 && pdf.subarray(0, 4).toString() === '%PDF', `PDF rendered (${pdf.length} B)`);
+await page.emulateMedia({ media: 'screen' });
+await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+ok((await page.locator('#print-root').count()) === 0, 'print container cleaned up after printing');
+
 // ---- themes + mobile screenshots ----
 await page.click('nav >> text=Podešavanja');
 await page.selectOption('select >> nth=0', 'dark');

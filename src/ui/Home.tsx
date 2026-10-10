@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
-import { exams, go, history, importText, questions, session, startFixed, startRandom, settings } from '../store';
-import { fmtPercent } from '../core/util';
+import { exams, history, importText, go, questions, resumeSession, session, startFixed, startRandom, settings } from '../store';
+import { fmtDuration, fmtPercent } from '../core/util';
 import { guardStart, toast } from './common';
 import samplePack from '../../sample-pack.json?raw';
 
@@ -28,9 +28,10 @@ export function Home() {
       {s && (
         <div class="banner info" role="status">
           <span>
-            Ispit u toku: <b>{s.name}</b> ({s.items.filter((i) => i.selected.length).length}/{s.items.length} odgovoreno).
+            {s.paused ? 'Ispit pauziran' : 'Ispit u toku'}: <b>{s.name}</b> ({s.items.filter((i) => i.selected.length).length}/{s.items.length} odgovoreno
+            {s.limitSec != null ? `, preostalo ${fmtDuration(Math.max(0, s.limitSec - s.elapsedSec))}` : `, proteklo ${fmtDuration(s.elapsedSec)}`}).
           </span>
-          <button class="btn primary sm" onClick={() => go({ name: 'run' })}>Nastavi</button>
+          <button class="btn primary sm" onClick={resumeSession}>Nastavi</button>
         </div>
       )}
 

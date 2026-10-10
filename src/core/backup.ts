@@ -20,6 +20,12 @@ export interface RestoreResult {
   dropped: number;
 }
 
+export function filterAttempts(list: unknown[]): Attempt[] {
+  return (list as Attempt[]).filter(
+    (a) => a && typeof a.id === 'string' && Array.isArray(a.items) && typeof a.finishedAt === 'number',
+  );
+}
+
 /** Parses a backup file. Questions/exams are re-validated; broken ones are dropped and counted. */
 export function parseBackup(text: string): RestoreResult {
   let raw: unknown;
@@ -46,9 +52,7 @@ export function parseBackup(text: string): RestoreResult {
     if (r.ok) exams.push(r.value);
     else dropped++;
   }
-  const history = (d.history as Attempt[]).filter(
-    (a) => a && typeof a.id === 'string' && Array.isArray(a.items) && typeof a.finishedAt === 'number',
-  );
+  const history = filterAttempts(d.history as unknown[]);
   dropped += (d.history as unknown[]).length - history.length;
   const s = (d.settings ?? {}) as Partial<Settings>;
   const settings: Settings = {

@@ -295,3 +295,32 @@ th { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: up
 
 .bars.nolabel .barrow { grid-template-columns: 1fr auto; min-width: 150px; }
 .grid > .card + .card { margin-top: 0; }
+
+/* ---------- print report (PDF export) ---------- */
+#print-root { display: none; }
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body.printing > *:not(#print-root) { display: none !important; }
+  body.printing #print-root { display: block; }
+  body.printing { background: #fff; color: #000; }
+  .pr { font: 11pt/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #000; background: #fff; }
+  .pr h1 { font-size: 16pt; margin: 4pt 0; }
+  .pr-context { margin: 0 0 6pt; padding-bottom: 6pt; border-bottom: 1.5pt solid #000; font-style: italic; }
+  .pr-summary { margin: 0 0 12pt; }
+  .pr-item { border: 1pt solid #444; border-radius: 4pt; padding: 8pt 10pt; margin: 0 0 10pt; break-inside: avoid; page-break-inside: avoid; }
+  .pr-meta { font-size: 9pt; color: #333; margin-bottom: 4pt; }
+  .pr-tag { font-weight: 700; }
+  .pr-tag.bad { text-decoration: underline; }
+  .pr-q { white-space: pre-wrap; overflow-wrap: anywhere; font-weight: 600; margin-bottom: 6pt; }
+  .pr-img { display: block; max-width: 100%; max-height: 90mm; object-fit: contain; border: 0.5pt solid #888; margin: 0 0 6pt; }
+  .pr-choose { font-size: 9pt; font-style: italic; margin-bottom: 3pt; }
+  .pr-opts { list-style: none; margin: 0; padding: 0; }
+  .pr-opts li { display: flex; gap: 8pt; align-items: baseline; padding: 2pt 4pt; border-left: 3pt solid transparent; }
+  .pr-opts li.ok { border-left-color: #000; font-weight: 700; }
+  .pr-opts li.ko { border-left-style: dashed; border-left-color: #000; text-decoration: line-through; }
+  .pr-letter { flex: 0 0 auto; font-weight: 700; }
+  .pr-txt { flex: 1 1 auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .pr-opttag { flex: 0 0 auto; font-size: 9pt; font-weight: 400; text-decoration: none; }
+  .pr-ans { margin: 6pt 0 0; }
+  .pr-expl { margin: 4pt 0 0; padding: 4pt 6pt; border: 0.5pt solid #888; white-space: pre-wrap; overflow-wrap: anywhere; }
+}

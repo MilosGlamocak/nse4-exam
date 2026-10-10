@@ -16,6 +16,7 @@ import { applyPack, parsePack, type ImportReport } from './core/importer';
 import { BUNDLED } from './bundled';
 import { buildSession, finishSession, pickRandom } from './core/session';
 import { makeBackup, parseBackup, type AppData } from './core/backup';
+import { makeHistoryExport, mergeHistory, parseHistoryImport } from './core/historyIo';
 import { scoreAnswer } from './core/scoring';
 
 export type Route =
@@ -91,7 +92,7 @@ export async function boot(): Promise<void> {
     settings.value = { ...DEFAULT_SETTINGS, ...s, random: { ...DEFAULT_SETTINGS.random, ...(s.random ?? {}) } };
     meta.value = { ...DEFAULT_META, ...m };
     session.value = live && Array.isArray(live.items) ? live : null;
-    if (session.value) route.value = { name: 'run' };
+    if (session.value && !session.value.paused) route.value = { name: 'run' };
     ready.value = true;
   });
 
@@ -325,6 +326,16 @@ export function setElapsed(sec: number): void {
   patchSession((s) => ({ ...s, elapsedSec: sec }));
 }
 
+/** Stops the clock and hides the questions; the exam stays saved until resumed. */
+export function pauseSession(): void {
+  patchSession((s) => ({ ...s, paused: true }));
+}
+
+export function resumeSession(): void {
+  patchSession((s) => ({ ...s, paused: false }));
+  go({ name: 'run' });
+}
+
 export function toggleOption(itemIndex: number, optionId: string, isMulti: boolean): void {
   patchSession((s) => {
     const it = s.items[itemIndex];
@@ -397,11 +408,26 @@ export function downloadText(filename: string, text: string, mime = 'application
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
 
-export function exportBackup(): void {
+function dateStamp(): string {
   const d = new Date();
-  const stamp = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
-  downloadText(`nse4-backup-${stamp}.json`, makeBackup(currentData()));
+  return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+}
+
+export function exportBackup(): void {
+  downloadText(`nse4-backup-${dateStamp()}.json`, makeBackup(currentData()));
   meta.value = { ...meta.value, lastBackupAt: Date.now(), bannerSnoozedUntil: null };
+}
+
+export function exportHistory(): void {
+  downloadText(`nse4-istorija-${dateStamp()}.json`, makeHistoryExport(history.value));
+}
+
+/** Merges attempts from a history export / full backup into the current history (existing ids are kept). */
+export function importHistory(text: string): { added: number; skipped: number; dropped: number } {
+  const { attempts, dropped } = parseHistoryImport(text);
+  const m = mergeHistory(history.value, attempts);
+  history.value = m.history;
+  return { added: m.added, skipped: m.skipped, dropped };
 }
 
 export function restoreBackup(text: string): { dropped: number } {

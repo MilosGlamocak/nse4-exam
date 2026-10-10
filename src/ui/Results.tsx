@@ -6,6 +6,7 @@ import { buildClaudeExport } from '../core/claudeExport';
 import { idsToLetters } from '../core/scoring';
 import { LETTERS, chooseLabel, fmtDate, fmtDuration, fmtPercent, fmtPts } from '../core/util';
 import { Bars, Exhibit, Modal, Tabs, copyText, guardStart, toast } from './common';
+import { printAttempt, reportItems } from './PrintReport';
 
 export function Results({ attemptId }: { attemptId: string }) {
   const a = history.value.find((x) => x.id === attemptId);
@@ -35,6 +36,11 @@ function ResultsView({ a }: { a: Attempt }) {
     const text = buildClaudeExport(a);
     if (await copyText(text)) toast('Kopirano u clipboard – zalepi u chat');
     else setManual(text);
+  };
+
+  const exportPdf = () => {
+    toast('U dijalogu za štampu izaberi „Sačuvaj kao PDF“');
+    void printAttempt(a, imgs);
   };
 
   return (
@@ -68,6 +74,7 @@ function ResultsView({ a }: { a: Attempt }) {
         </div>
         <div class="row" style={{ marginTop: '16px' }}>
           <button class="btn primary" onClick={copy}>📋 Kopiraj za Claude</button>
+          <button class="btn" onClick={exportPdf} disabled={!reportItems(a).length} title="Pogrešna i označena pitanja – štampa / sačuvaj kao PDF">🖨 Izvezi PDF</button>
           <button class="btn" disabled={!wrong.length} onClick={() => guardStart(() => startRetryWrong(a, 'practice'))}>Ponovi pogrešne (vežba)</button>
           <button class="btn" disabled={!wrong.length} onClick={() => guardStart(() => startRetryWrong(a, 'exam'))}>Ponovi pogrešne (ispit)</button>
           <button class="btn ghost right" onClick={() => go({ name: 'history' })}>Istorija</button>

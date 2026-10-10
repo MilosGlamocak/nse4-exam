@@ -72,3 +72,6 @@ Podaci žive u IndexedDB-u pregledača (fallback: localStorage). Ispit u toku se
 localStorage, pa osvežavanje stranice ne gubi napredak. Pošto su podaci vezani za jedan pregledač
 (i za putanju fajla), redovno preuzimaj **backup** (*Podešavanja → Preuzmi backup*); traka za
 podsetnik se pojavljuje ako je poslednji backup stariji od 7 dana.
+Samo istoriju možeš izvesti/uvesti u *Istorija → Izvezi / Uvezi istoriju* (uvoz spaja, ne briši postojeće;
+prihvata i pun backup). *Pauziraj* u ispitu zaustavlja sat i čuva ispit; nastavak je sa Početne.
+Rezultati → *Izvezi PDF* otvara štampu (pogrešna + označena pitanja) – izaberi „Sačuvaj kao PDF“.

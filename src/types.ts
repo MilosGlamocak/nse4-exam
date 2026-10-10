@@ -57,6 +57,8 @@ export interface Session {
   partialCredit: boolean;
   items: SessionItem[];
   index: number;
+  /** user paused the exam: clock is stopped and questions are hidden until resumed */
+  paused?: boolean;
 }
 
 /** Snapshot of one answered question inside a finished attempt. */
