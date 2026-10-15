@@ -1,0 +1,1886 @@
+{
+ "pack": "pack-04-l3-l4-mix-v3",
+ "questions": [
+  {
+   "id": "p4-l3-01",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "Firewall policy - list views",
+   "type": "single",
+   "question": "Which firewall policy list view lets the administrator create labels to group policies while still listing them in evaluation order?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Interface Pair View"
+    },
+    {
+     "id": "B",
+     "text": "Sequence Grouping View"
+    },
+    {
+     "id": "C",
+     "text": "By Sequence"
+    },
+    {
+     "id": "D",
+     "text": "Global View"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 83): postoje tri pogleda - Interface Pair View (default, sekcije po paru ulaz-izlaz), Sequence Grouping View i By Sequence (jedna lista). U Sequence Grouping View politike su 'uncategorized' dok ne napravis labele. Zato su 'LAN to WAN / WAN to LAN / Implicit' iz dump-0025 labele iz Sequence Grouping View."
+  },
+  {
+   "id": "dump2-views-order",
+   "source": "dump",
+   "lesson": 3,
+   "topic": "Firewall policy - list views",
+   "type": "single",
+   "question": "A network administrator is reviewing firewall policies in both Interface Pair View and By Sequence View. The policies appear in a different order in each view. Why is the policy order different in these two views?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Policies in Interface Pair View are prioritized by security levels, while By Sequence View strictly follows the administrator's manual ordering."
+    },
+    {
+     "id": "B",
+     "text": "By Sequence View groups policies based on rule priority, while Interface Pair View always follows the order of traffic logs."
+    },
+    {
+     "id": "C",
+     "text": "The firewall dynamically reorders policies in Interface Pair View based on recent traffic patterns, but By Sequence View remains static."
+    },
+    {
+     "id": "D",
+     "text": "Interface Pair View sorts policies based on matching interfaces, while By Sequence View shows the actual processing order of rules."
+    }
+   ],
+   "correct": [
+    "D"
+   ],
+   "explanation": "Dump kljuc D (q63 Q58). L3: Interface Pair View aranzira politike po paru ulaznog i izlaznog interfejsa, By Sequence je jedna lista u redosledu evaluacije. FortiGate nikad ne preuredjuje politike po saobracaju."
+  },
+  {
+   "id": "p4-l3-03",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "Firewall policy - policy order",
+   "type": "single",
+   "question": "An administrator moves firewall policy ID 5 above policy ID 1 in the policy list. What is the result?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The policy IDs are renumbered so that the moved policy becomes ID 1."
+    },
+    {
+     "id": "B",
+     "text": "The policy IDs remain unchanged, but policy 5 is now evaluated before policy 1."
+    },
+    {
+     "id": "C",
+     "text": "The policy ID determines evaluation order, so the move has no effect on traffic matching."
+    },
+    {
+     "id": "D",
+     "text": "The move is only allowed after both policies are disabled."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 85): FortiGate trazi prvu politiku koja se poklapa od vrha liste. Pri premestanju ID-evi ostaju isti - vazi pozicija, ne ID."
+  },
+  {
+   "id": "p4-l3-04",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "Firewall policy - Move by ID",
+   "type": "single",
+   "question": "In which policy list views can an administrator use the Move by ID option?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Interface Pair View only"
+    },
+    {
+     "id": "B",
+     "text": "By Sequence and Sequence Grouping View"
+    },
+    {
+     "id": "C",
+     "text": "Any view"
+    },
+    {
+     "id": "D",
+     "text": "Only from the CLI"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 86): 'Move by ID' radi samo u By Sequence i Sequence Grouping View. Korisno kad ima stotine politika."
+  },
+  {
+   "id": "p4-l3-05",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "Firewall policy - match criteria",
+   "type": "multi",
+   "question": "Which two items are NOT firewall policy match criteria? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Schedule"
+    },
+    {
+     "id": "B",
+     "text": "Security profile"
+    },
+    {
+     "id": "C",
+     "text": "Service"
+    },
+    {
+     "id": "D",
+     "text": "Log allowed traffic"
+    },
+    {
+     "id": "E",
+     "text": "Incoming interface"
+    }
+   ],
+   "correct": [
+    "B",
+    "D"
+   ],
+   "explanation": "L3 (sl. 74): kriterijumi poklapanja su incoming/outgoing interface, source, destination, schedule i service. Security profile i logovanje se primenjuju tek nakon poklapanja, kad je akcija ACCEPT."
+  },
+  {
+   "id": "p4-l3-06",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "VIP and IP pool - ARP reply",
+   "type": "single",
+   "question": "What does the ARP reply setting, enabled by default on VIPs and IP pools, do?",
+   "options": [
+    {
+     "id": "A",
+     "text": "FortiGate replies to ARP requests for the external address configured in the VIP or IP pool."
+    },
+    {
+     "id": "B",
+     "text": "FortiGate sends gratuitous ARP for the mapped internal server."
+    },
+    {
+     "id": "C",
+     "text": "FortiGate learns the MAC address of the mapped server automatically."
+    },
+    {
+     "id": "D",
+     "text": "FortiGate disables ARP for the external address to prevent spoofing."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L3 (sl. 106): kad upstream ruter nema ispravnu rutu, ARP reply omogucava da ruter razresi MAC eksternu adresu iz VIP-a. Najbolja praksa je da ostane ukljucen. Ako je dump scenario 'timeout i sniffer ne vidi nista', resenje je arp-reply."
+  },
+  {
+   "id": "p4-l3-07",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "VIP - static NAT without port forwarding",
+   "type": "single",
+   "question": "A VIP is configured as Static NAT with external IP 70.70.70.71 mapped to 172.16.1.10. Port forwarding is disabled. An internet host sends TCP traffic to 70.70.70.71 on port 443, and the matching firewall policy references the VIP as the destination. What are the destination IP and port after DNAT?",
+   "options": [
+    {
+     "id": "A",
+     "text": "172.16.1.10, port 443"
+    },
+    {
+     "id": "B",
+     "text": "172.16.1.10, port 80"
+    },
+    {
+     "id": "C",
+     "text": "70.70.70.71, port 443"
+    },
+    {
+     "id": "D",
+     "text": "172.16.1.10, port 8443"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L3 (sl. 101-102): Static NAT je 1-na-1 za svaki protokol i port. Bez port forwarding-a se menja samo odredisna IP, port ostaje isti."
+  },
+  {
+   "id": "p4-l3-08",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "SNAT - fixed port",
+   "type": "single",
+   "question": "A firewall policy uses Use Outgoing Interface Address with fixed port (Preserve source port) enabled. What happens if two connections require the same source port for the same egress IP?",
+   "options": [
+    {
+     "id": "A",
+     "text": "FortiGate translates the source port of the second connection."
+    },
+    {
+     "id": "B",
+     "text": "Only one of the connections is established."
+    },
+    {
+     "id": "C",
+     "text": "Both connections are established using different public IP addresses."
+    },
+    {
+     "id": "D",
+     "text": "FortiGate automatically switches to a dynamic IP pool."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 97): fixed port iskljucuje prevodjenje izvornog porta. Ako dve sesije traze isti port na istoj IP, uspostavlja se samo jedna (session clash)."
+  },
+  {
+   "id": "p4-l3-09",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "IP pools - default type",
+   "type": "single",
+   "question": "What is the default IP pool type on FortiGate?",
+   "options": [
+    {
+     "id": "A",
+     "text": "One-to-one"
+    },
+    {
+     "id": "B",
+     "text": "Overload"
+    },
+    {
+     "id": "C",
+     "text": "Fixed port range"
+    },
+    {
+     "id": "D",
+     "text": "Port block allocation"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 98-99): cetiri tipa - Overload (default, many-to-one ili many-to-few uz prevodjenje porta), One-to-one, Fixed port range i Port block allocation. Poslednja dva su tipicna za carrier-grade NAT."
+  },
+  {
+   "id": "p4-l3-10",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "IP pools - addresses outside interface subnet",
+   "type": "single",
+   "question": "An IP pool uses 10.10.10.1-10.10.10.50, but the egress interface is 172.16.100.1/24. What must the administrator ensure for communications using these addresses to work?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Appropriate routing must be configured."
+    },
+    {
+     "id": "B",
+     "text": "DHCP relay must be enabled on the interface."
+    },
+    {
+     "id": "C",
+     "text": "Fixed port must be enabled in the policy."
+    },
+    {
+     "id": "D",
+     "text": "Nothing, because pool addresses are always reachable."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L3 (sl. 98): ako adrese iz pool-a nisu iz opsega adrese interfejsa, komunikacija moze da ne radi osim ako rutiranje nije ispravno podeseno."
+  },
+  {
+   "id": "p4-l4-01",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - administrative distance",
+   "type": "single",
+   "question": "Two static routes to 192.168.50.0/24 exist: one through port1 with distance 10 and one through port2 with distance 20. What is true?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Both routes are installed and traffic is load balanced."
+    },
+    {
+     "id": "B",
+     "text": "The port1 route is installed in the routing table, and the port2 route stays in the routing table database as a standby route."
+    },
+    {
+     "id": "C",
+     "text": "The port2 route is used because a higher distance means a higher preference."
+    },
+    {
+     "id": "D",
+     "text": "The port2 route is deleted from the configuration."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 124): distance je prvi tiebreaker za duplirane rute. Nizi distance pobedjuje i ide u routing tabelu, ostale idu u routing database kao standby."
+  },
+  {
+   "id": "p4-l4-02",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - static route priority",
+   "type": "single",
+   "question": "Two static routes to the same destination have the same distance. Which attribute breaks the tie, and which value wins?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Metric, lowest value"
+    },
+    {
+     "id": "B",
+     "text": "Priority, lowest value"
+    },
+    {
+     "id": "C",
+     "text": "Priority, highest value"
+    },
+    {
+     "id": "D",
+     "text": "Weight, highest value"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 127): priority razbija izjednacenje izmedju statickih ruta sa istim distance. Manja vrednost = veca prednost. Metric vazi samo za dinamicke rute."
+  },
+  {
+   "id": "p4-l4-03",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - ECMP",
+   "type": "single",
+   "question": "Two static routes to 10.0.4.0/24 have the same distance (10) and priority (1), one through port1 and one through port2. What happens?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Only the route with the lower interface name is installed."
+    },
+    {
+     "id": "B",
+     "text": "Both routes are installed and traffic is load balanced between them."
+    },
+    {
+     "id": "C",
+     "text": "Both routes are installed, but port2 is treated as standby."
+    },
+    {
+     "id": "D",
+     "text": "Neither route is installed because of the conflict."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 133): rute istog tipa sa istim destination, distance, metric i priority su ECMP. FortiGate instalira sve i balansira saobracaj. Default algoritam (SD-WAN iskljucen) je source-ip-based."
+  },
+  {
+   "id": "p4-l4-04",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - priority tiebreak",
+   "type": "single",
+   "question": "Two static routes to 10.0.4.0/24 have distance 10. The route through port1 has priority 1 and the route through port2 has priority 5. What is true?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Traffic is load balanced between both routes."
+    },
+    {
+     "id": "B",
+     "text": "Both routes are installed in the routing table, and FortiGate selects the port1 route because it has the lowest priority."
+    },
+    {
+     "id": "C",
+     "text": "The port2 route is placed only in the routing table database."
+    },
+    {
+     "id": "D",
+     "text": "The port2 route is preferred because it has the higher priority value."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 127): pri istom distance FortiGate instalira sve duplirane staticke rute u routing tabelu, a za lookup bira onu sa najnizim priority. Zamka je misliti da vise priority vrednosti znaci vecu prednost."
+  },
+  {
+   "id": "p4-l4-05",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - metric",
+   "type": "single",
+   "question": "Which statement about the route metric is correct?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It applies to both static and dynamic routes."
+    },
+    {
+     "id": "B",
+     "text": "It applies to dynamic routes only and is a tiebreaker between routes learned from the same protocol."
+    },
+    {
+     "id": "C",
+     "text": "It is used to compare OSPF routes against BGP routes."
+    },
+    {
+     "id": "D",
+     "text": "A higher metric means a higher preference."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 126, 128): metric vazi samo za dinamicke rute. Manja vrednost je bolja, i koristi se kao tiebreaker za rute istog protokola, ne izmedju razlicitih protokola."
+  },
+  {
+   "id": "p4-l4-06",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - longest match",
+   "type": "single",
+   "question": "FortiGate has these routes: 10.20.30.0/25 via port1; 10.20.30.128/26 via port2; 10.20.30.0/24 via port3 (distance 5); 0.0.0.0/0 via port4 (distance 1). Which route is used for traffic to 10.20.30.130?",
+   "options": [
+    {
+     "id": "A",
+     "text": "10.20.30.0/25 via port1"
+    },
+    {
+     "id": "B",
+     "text": "10.20.30.128/26 via port2"
+    },
+    {
+     "id": "C",
+     "text": "10.20.30.0/24 via port3"
+    },
+    {
+     "id": "D",
+     "text": "0.0.0.0/0 via port4"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "Longest match medju rutama koje stvarno sadrze adresu. /25 pokriva .0-.127 pa ne sadrzi .130. /26 pokriva .128-.191 i sadrzi je. Distance se poredi tek izmedju ruta za isto odredite."
+  },
+  {
+   "id": "p4-l4-07",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - RPF modes",
+   "type": "single",
+   "question": "The routing table has 0.0.0.0/0 via port2 and 10.10.10.0/24 via port3. A packet with source IP 10.10.10.10 arrives on port2 and starts a new session. What is the outcome?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It is dropped in both feasible path and strict mode."
+    },
+    {
+     "id": "B",
+     "text": "It passes in feasible path mode and is dropped in strict mode."
+    },
+    {
+     "id": "C",
+     "text": "It is dropped in feasible path mode and passes in strict mode."
+    },
+    {
+     "id": "D",
+     "text": "It passes in both modes."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 130): feasible path (ranije loose, default) trazi bilo koju rutu koja odgovara izvoru i ulaznom interfejsu - default ruta preko port2 odgovara. Strict dodatno trazi da je ta ruta najbolja za izvor - najbolja je /24 preko port3, pa strict odbacuje paket."
+  },
+  {
+   "id": "p4-l4-08",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - RPF modes",
+   "type": "single",
+   "question": "What is the default RPF check mode, formerly known as loose mode?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Feasible path"
+    },
+    {
+     "id": "B",
+     "text": "Strict"
+    },
+    {
+     "id": "C",
+     "text": "Reverse path only"
+    },
+    {
+     "id": "D",
+     "text": "Asymmetric"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L4 (sl. 130): dva moda - Feasible path (ranije loose, default) i Strict."
+  },
+  {
+   "id": "p4-l4-09",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - FQDN address in static route",
+   "type": "single",
+   "question": "A firewall address object of type FQDN was created, but it cannot be selected in the Destination field of a new static route that uses a named address. What must the administrator do?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Enable Routing configuration in the address object."
+    },
+    {
+     "id": "B",
+     "text": "Wait until the FQDN is resolved by DNS."
+    },
+    {
+     "id": "C",
+     "text": "Set the address object interface to port2."
+    },
+    {
+     "id": "D",
+     "text": "Change the object type to Subnet."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L4 (sl. 120): Subnet ili FQDN adresa moze biti destination staticke rute tek kad ukljucis Routing configuration (allow-routing)."
+  },
+  {
+   "id": "p4-l4-10",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - route lookup tool",
+   "type": "single",
+   "question": "When does the Route Lookup tool in the routing monitor also consider policy routes?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Always"
+    },
+    {
+     "id": "B",
+     "text": "When all lookup criteria are provided"
+    },
+    {
+     "id": "C",
+     "text": "Only for dynamic routes"
+    },
+    {
+     "id": "D",
+     "text": "Never"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 129): ako ne unesete sve kriterijume, uzima se samo routing tabela. Ako unesete sve kriterijume (src, dst, port, protokol, interfejs...), uzimaju se i routing tabela i policy tabela."
+  },
+  {
+   "id": "p4-l4-11",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - routing table output",
+   "type": "single",
+   "question": "Which entries does the get router info routing-table all command show?",
+   "options": [
+    {
+     "id": "A",
+     "text": "All routes, including standby routes"
+    },
+    {
+     "id": "B",
+     "text": "Only the best active routes; standby and inactive routes are only in the routing table database"
+    },
+    {
+     "id": "C",
+     "text": "Only static routes"
+    },
+    {
+     "id": "D",
+     "text": "Only connected routes"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 128): komanda prikazuje samo najbolje aktivne rute. Standby i neaktivne rute postoje samo u routing database."
+  },
+  {
+   "id": "p4-l4-12",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - ECMP default algorithm",
+   "type": "single",
+   "question": "With SD-WAN disabled, what is the default ECMP load balancing algorithm?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Source-destination IP based"
+    },
+    {
+     "id": "B",
+     "text": "Source IP based"
+    },
+    {
+     "id": "C",
+     "text": "Weight based"
+    },
+    {
+     "id": "D",
+     "text": "Usage based"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L4 (sl. 137): default je source IP based. Ova stavka je vec jednom pogresno ucena iz Anki kartice."
+  },
+  {
+   "id": "dump2-fsso-8000",
+   "source": "dump",
+   "lesson": 6,
+   "topic": "FSSO - collector agent troubleshooting",
+   "type": "single",
+   "question": "An administrator suspects that the Collector Agent is not forwarding login events to FortiGate. What is the most effective troubleshooting step?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Verify if DC agent is enabled on the FortiGate."
+    },
+    {
+     "id": "B",
+     "text": "Restart the domain controller to refresh authentication services."
+    },
+    {
+     "id": "C",
+     "text": "Verify if FortiGate is set to use LDAP authentication instead of FSSO."
+    },
+    {
+     "id": "D",
+     "text": "Check if TCP port 8000 is open between the collector agent and FortiGate."
+    }
+   ],
+   "correct": [
+    "D"
+   ],
+   "explanation": "Dump kljuc D (q63 Q57). L6 (sl. 180): collector agent salje podatke FortiGate-u preko TCP 8000 (default), a slusa DC agente na UDP 8002."
+  },
+  {
+   "id": "p4-l6-02",
+   "source": "claude",
+   "lesson": 6,
+   "topic": "FSSO - polling mode ports",
+   "type": "single",
+   "question": "In FSSO collector agent-based polling mode, where no DC agent is installed, how does the collector agent learn about user logins?",
+   "options": [
+    {
+     "id": "A",
+     "text": "DC agents push events to it over UDP 8002."
+    },
+    {
+     "id": "B",
+     "text": "It periodically polls TCP port 445 of each domain controller."
+    },
+    {
+     "id": "C",
+     "text": "FortiGate queries the domain controllers over LDAP and passes events to it."
+    },
+    {
+     "id": "D",
+     "text": "Domain controllers send syslog messages to it."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L6 (sl. 183): kolektor svakih nekoliko sekundi poll-uje TCP 445 na svakom DC-u, pa podatke salje FortiGate-u preko TCP 8000."
+  },
+  {
+   "id": "p4-l8-01",
+   "source": "claude",
+   "lesson": 8,
+   "topic": "Antivirus - flow-based infected file",
+   "type": "single",
+   "question": "A user downloads an infected file for the first time through a firewall policy using flow-based antivirus. What does the user experience?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The download is blocked immediately and a replacement message is displayed."
+    },
+    {
+     "id": "B",
+     "text": "FortiGate resets the connection without sending the last piece of the file, so the file is truncated. A block replacement message appears only on a second attempt."
+    },
+    {
+     "id": "C",
+     "text": "The file is quarantined and delivered after the administrator releases it."
+    },
+    {
+     "id": "D",
+     "text": "The file is delivered with a warning banner."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L8 (sl. 257): flow mode kesira poslednji paket i ceka rezultat skena. Ako nadje virus, resetuje konekciju i ne salje poslednji deo, pa je fajl neupotrebljiv. IPS engine kesira URL pa pri drugom pokusaju salje block replacement message."
+  },
+  {
+   "id": "dump2-wf-profile",
+   "source": "dump",
+   "lesson": 9,
+   "topic": "Web Filtering - profile and inspection mode",
+   "type": "single",
+   "question": "You have created a web filter profile named restrict_media-profile with a daily category usage quota. When you are adding the profile to the firewall policy, the restrict_media-profile is not listed in the available web profile drop down. What could be the reason?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The firewall policy is in no-inspection mode instead of deep-inspection."
+    },
+    {
+     "id": "B",
+     "text": "The inspection mode in the firewall policy is not matching with web filter profile feature set."
+    },
+    {
+     "id": "C",
+     "text": "The web filter profile is already referenced in another firewall policy."
+    },
+    {
+     "id": "D",
+     "text": "The naming convention used in the web filter profile is restricting it in the firewall policy."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "Dump kljuc B (q63 Q54, q44 Q29). L9 (sl. 289): profil sa proxy-based feature set-om primenjuje se na politiku u proxy-based modu."
+  },
+  {
+   "id": "p4-l9-02",
+   "source": "claude",
+   "lesson": 9,
+   "topic": "Web Filtering - proxy features and RAM",
+   "type": "single",
+   "question": "FortiOS no longer supports proxy-related features on FortiGate models with how much RAM?",
+   "options": [
+    {
+     "id": "A",
+     "text": "1 GB or less"
+    },
+    {
+     "id": "B",
+     "text": "2 GB or less"
+    },
+    {
+     "id": "C",
+     "text": "4 GB or less"
+    },
+    {
+     "id": "D",
+     "text": "8 GB or less"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L9 (sl. 289): proxy funkcije se ne podrzavaju na modelima sa 2 GB RAM-a ili manje."
+  },
+  {
+   "id": "dump2-ips-failopen-log",
+   "source": "dump",
+   "lesson": 10,
+   "topic": "IPS - fail open log",
+   "type": "single",
+   "question": "Refer to the exhibit. date=2025-02-4 time=09:07:59 logid=0100022700 type=event subtype=system level=critical vd=\"root\" logdesc=\"IPS session scan paused\" action=\"drop\" msg=\"IPS session scan, enter fail open mode\". What can you conclude from the log shown in the exhibit?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The IPS socket buffer is full and IPS engine needs more memory to create new sessions."
+    },
+    {
+     "id": "B",
+     "text": "The IPS socket buffer is full and IPS engine cannot decode a packet."
+    },
+    {
+     "id": "C",
+     "text": "The IPS scan is paused by the IPS diagnostic command with bypass mode option 5."
+    },
+    {
+     "id": "D",
+     "text": "The IPS session scan is paused and reevaluating the packet because of a dirty flag."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "Dump kljuc A (q44 Q3). L10 (sl. 325): IPS ulazi u fail-open kad je socket buffer pun i engine nema memorije za nove sesije. Ovde je action=drop, jer je fail-open iskljucen."
+  },
+  {
+   "id": "p4-l10-02",
+   "source": "claude",
+   "lesson": 10,
+   "topic": "IPS - fail-open default",
+   "type": "single",
+   "question": "The IPS socket buffer is full and the IPS fail-open setting is left at its default. What happens to new packets?",
+   "options": [
+    {
+     "id": "A",
+     "text": "They pass through without inspection."
+    },
+    {
+     "id": "B",
+     "text": "They are dropped."
+    },
+    {
+     "id": "C",
+     "text": "They are sent to FortiSandbox."
+    },
+    {
+     "id": "D",
+     "text": "They are inspected by the antivirus engine only."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L10 (sl. 325): default je fail-open disabled, pa se novi paketi odbacuju. Fail-open se preporucuje samo kad je dostupnost mreze vaznija od bezbednosti (npr. datacenter)."
+  },
+  {
+   "id": "p4-l13-01",
+   "source": "claude",
+   "lesson": 13,
+   "topic": "HA - manual failover",
+   "type": "single",
+   "question": "Both members of an HA cluster have override disabled and have been running for one week. The administrator wants to force a failover from the current primary. Which action does this?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Run diagnose sys ha reset-uptime on the primary."
+    },
+    {
+     "id": "B",
+     "text": "Increase the HA priority on the secondary."
+    },
+    {
+     "id": "C",
+     "text": "Change the HA group ID on the primary."
+    },
+    {
+     "id": "D",
+     "text": "Disable session pickup on the primary."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L13 (sl. 452): sa override disabled HA uptime ima prednost nad priority. reset-uptime na primary resetuje HA uptime na 0, pa secondary preuzima. Vecu priority na secondary-ju ignorise, jer uptime dolazi pre priority."
+  },
+  {
+   "id": "dump2-fgcp-reqs",
+   "source": "dump",
+   "lesson": 13,
+   "topic": "HA - cluster requirements",
+   "type": "multi",
+   "question": "An administrator wants to form an HA cluster using the FGCP protocol. Which two requirements must the administrator ensure both members fulfill? (Choose two answers)",
+   "options": [
+    {
+     "id": "A",
+     "text": "They must have the same HA group ID."
+    },
+    {
+     "id": "B",
+     "text": "They must have the heartbeat interfaces in the same subnet."
+    },
+    {
+     "id": "C",
+     "text": "They must have the same number of configured VDOMs."
+    },
+    {
+     "id": "D",
+     "text": "They must have the same hard drive configuration."
+    }
+   ],
+   "correct": [
+    "A",
+    "D"
+   ],
+   "explanation": "Dump kljuc A, D (q41 Q13). L13 (sl. 451): isti model, firmware, licenca, konfiguracija diskova i operating mode; isti group ID, group name, lozinka i heartbeat podesavanja. Heartbeat interfejsi treba da budu u istom broadcast domenu, ne u istoj IP podmrezi."
+  },
+  {
+   "id": "p4-l13-03",
+   "source": "claude",
+   "lesson": 13,
+   "topic": "HA - memory-based failover",
+   "type": "single",
+   "question": "Memory-based failover is enabled with a threshold of 70% and a monitoring period of 50 seconds. Memory usage on the primary FortiGate stays at 90% for 55 seconds. What happens?",
+   "options": [
+    {
+     "id": "A",
+     "text": "An HA failover is triggered."
+    },
+    {
+     "id": "B",
+     "text": "The primary enters conserve mode only, with no failover."
+    },
+    {
+     "id": "C",
+     "text": "A failover is triggered only if override is enabled."
+    },
+    {
+     "id": "D",
+     "text": "The secondary is rebooted."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L13 (sl. 463): sa ukljucenim memory-based failover-om failover se pokrece kad iskoriscenost memorije na primary dostigne prag tokom podesenog perioda pracenja."
+  },
+  {
+   "id": "p4-l13-04",
+   "source": "claude",
+   "lesson": 13,
+   "topic": "HA - election with override disabled",
+   "type": "single",
+   "question": "Unit A has priority 100 and HA uptime of 7 days. Unit B has priority 200 and HA uptime of 1 hour. Both have the same number of monitored interfaces up, and override is disabled. Which unit becomes the primary?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Unit A"
+    },
+    {
+     "id": "B",
+     "text": "Unit B"
+    },
+    {
+     "id": "C",
+     "text": "The unit with the higher serial number"
+    },
+    {
+     "id": "D",
+     "text": "The units renegotiate until HA uptime is equal"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L13 (sl. 452): redosled sa override disabled - monitored interfejsi, pa HA uptime (razlika bar 5 minuta), pa priority, pa serial number. Unit A ima mnogo veci uptime, pa priority 200 na Unit B ne pomaze."
+  },
+  {
+   "id": "p4-l13-05",
+   "source": "claude",
+   "lesson": 13,
+   "topic": "HA - session pickup limits",
+   "type": "single",
+   "question": "Session pickup is enabled. Which sessions cannot be picked up by the new primary after a failover and must be restarted?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Sessions that terminate at the FortiGate itself, such as SSL VPN and proxy sessions"
+    },
+    {
+     "id": "B",
+     "text": "Any HTTP session"
+    },
+    {
+     "id": "C",
+     "text": "Any UDP session"
+    },
+    {
+     "id": "D",
+     "text": "Any session using NAT"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L13 (sl. 463): sesije koje zavrsavaju na samom FortiGate-u (SSL VPN, proxy) ne mogu da se predaju drugom uredjaju."
+  },
+  {
+   "id": "p4-l13-06",
+   "source": "claude",
+   "lesson": 13,
+   "topic": "HA - virtual MAC and group ID",
+   "type": "single",
+   "question": "Two HA clusters in the same broadcast domain use the same HA group ID. What problem can occur?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Virtual MAC address conflicts"
+    },
+    {
+     "id": "B",
+     "text": "Heartbeat IP conflicts"
+    },
+    {
+     "id": "C",
+     "text": "The clusters merge automatically"
+    },
+    {
+     "id": "D",
+     "text": "Configuration synchronization fails between members"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L13 (sl. 464): virtualni MAC se pravi iz group ID-ja, virtual cluster ID-ja i indeksa interfejsa. Zato svaki klaster u istom domenu treba da ima razlicit group ID."
+  },
+  {
+   "id": "p4-l14-01",
+   "source": "claude",
+   "lesson": 14,
+   "topic": "Conserve mode - av-failopen",
+   "type": "single",
+   "question": "Which av-failopen option keeps bypassing the antivirus proxy even after FortiGate leaves conserve mode, until the administrator changes the setting or restarts the unit?",
+   "options": [
+    {
+     "id": "A",
+     "text": "off"
+    },
+    {
+     "id": "B",
+     "text": "pass"
+    },
+    {
+     "id": "C",
+     "text": "one-shot"
+    },
+    {
+     "id": "D",
+     "text": "drop"
+    }
+   ],
+   "correct": [
+    "C"
+   ],
+   "explanation": "L14 (sl. 502): off - nove sesije sa skeniranjem se ne propustaju. pass (default) - propusta bez inspekcije dok traje conserve mode. one-shot - kao pass, ali nastavlja da zaobilazi AV i posle izlaska iz conserve moda."
+  },
+  {
+   "id": "p4-l14-02",
+   "source": "claude",
+   "lesson": 14,
+   "topic": "Conserve mode - extreme threshold",
+   "type": "single",
+   "question": "Memory usage exceeds the extreme threshold. What happens to new sessions?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It depends on the av-failopen setting."
+    },
+    {
+     "id": "B",
+     "text": "They are always dropped, regardless of configuration."
+    },
+    {
+     "id": "C",
+     "text": "They pass without inspection."
+    },
+    {
+     "id": "D",
+     "text": "Only sessions with antivirus enabled are dropped."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L14 (sl. 500, 502): iznad extreme praga sve nove sesije se odbacuju bez obzira na konfiguraciju. Iznad red praga akcije zavise od podesavanja (fail-open i av-failopen)."
+  },
+  {
+   "id": "p4-l14-03",
+   "source": "claude",
+   "lesson": 14,
+   "topic": "Conserve mode - NTurbo and fail-open",
+   "type": "single",
+   "question": "IPS fail-open is enabled and is triggered. What happens to new sessions that would normally be accelerated with NTurbo?",
+   "options": [
+    {
+     "id": "A",
+     "text": "They pass without inspection."
+    },
+    {
+     "id": "B",
+     "text": "They are dropped, even though fail-open is enabled."
+    },
+    {
+     "id": "C",
+     "text": "They are handled by the content processor."
+    },
+    {
+     "id": "D",
+     "text": "They are sent to proxy-based inspection."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L14 (sl. 501): NTurbo ne podrzava fail-open. Ako se fail-open aktivira, nove sesije koje bi inace NTurbo ubrzao se odbacuju."
+  },
+  {
+   "id": "dump2-cnf-path",
+   "source": "dump",
+   "lesson": 15,
+   "topic": "FortiGate CNF - traffic path",
+   "type": "single",
+   "question": "You deployed a FortiGate Cloud-Native Firewall (CNF) in AWS for FortiGate CNF policy enforcement for EC2 instance traffic. Which path does the EC2 traffic take from the EC2 instance to the internet?",
+   "options": [
+    {
+     "id": "A",
+     "text": "EC2 instance > GWLBe > FortiGate CNF > GWLBe > IGW > internet"
+    },
+    {
+     "id": "B",
+     "text": "EC2 instance > Internet Gateway (IGW) > Gateway Load Balancer (GWLB) > FortiGate CNF > internet"
+    },
+    {
+     "id": "C",
+     "text": "EC2 instance > FortiGate CNF > GWLB > GWLBe > IGW > internet"
+    },
+    {
+     "id": "D",
+     "text": "EC2 instance > GWLB endpoint (GWLBe) > FortiGate CNF > IGW > internet"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "Dump kljuc A (q44 Q18). L15 (sl. 527): saobracaj ide ka GWLBe, prosledjuje se CNF servisu, vraca se na isti GWLBe, pa izlazi preko internet gateway-a."
+  },
+  {
+   "id": "dump2-cnf-creates",
+   "source": "dump",
+   "lesson": 15,
+   "topic": "FortiGate CNF - deployment components",
+   "type": "single",
+   "question": "You deployed a FortiGate Cloud-Native Firewall (CNF) in AWS. During the deployment, which components must the FortiGate CNF create to handle traffic from the EC2 instance?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The customer VPC and GWLBe"
+    },
+    {
+     "id": "B",
+     "text": "The gateway load balancer endpoint (GWLBe) in the customer virtual private cloud (VPC)"
+    },
+    {
+     "id": "C",
+     "text": "The CNF VPC, customer VPC, and GWLB"
+    },
+    {
+     "id": "D",
+     "text": "The GWLB, GWLBe, and the internet gateway (IGW) in the customer VPC"
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "Dump kljuc B (q44 Q38). L15 (sl. 527): FortiGate CNF kreira GWLBe u tvojoj zasticenoj mrezi (VPC). GWLB je deo CNF servisa, a VPC i IGW su vlasnistvo kupca."
+  },
+  {
+   "id": "p4-l15-03",
+   "source": "claude",
+   "lesson": 15,
+   "topic": "FortiGate CNF - scope of an instance",
+   "type": "single",
+   "question": "How is a FortiGate CNF instance scoped?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It is dedicated to one customer and can connect to multiple VPCs, accounts, and availability zones."
+    },
+    {
+     "id": "B",
+     "text": "It is shared by multiple customers."
+    },
+    {
+     "id": "C",
+     "text": "It protects a single VPC only."
+    },
+    {
+     "id": "D",
+     "text": "It is limited to one availability zone."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L15 (sl. 525): instanca je posvecena jednom kupcu, ali moze da se povezuje sa vise VPC-ova, naloga i availability zona."
+  },
+  {
+   "id": "p4-l16-01",
+   "source": "claude",
+   "lesson": 16,
+   "topic": "FortiSASE - agent-based connectivity",
+   "type": "single",
+   "question": "By default, how does FortiClient connect to FortiSASE in agent-based mode?",
+   "options": [
+    {
+     "id": "A",
+     "text": "IPsec VPN"
+    },
+    {
+     "id": "B",
+     "text": "Explicit web proxy using a PAC file"
+    },
+    {
+     "id": "C",
+     "text": "SSL VPN web portal"
+    },
+    {
+     "id": "D",
+     "text": "GRE tunnel"
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L16 (sl. 548): agent-based je najcesci scenario, FortiClient se povezuje preko VPN tunela, a podrazumevano je IPsec VPN. Proxy sa PAC fajlom je agentless."
+  },
+  {
+   "id": "p4-l16-02",
+   "source": "claude",
+   "lesson": 16,
+   "topic": "FortiSASE - agentless (SWG)",
+   "type": "multi",
+   "question": "Which two statements about FortiSASE agentless deployment are true? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "FortiSASE distributes a PAC file so the SWG service acts as an explicit web proxy."
+    },
+    {
+     "id": "B",
+     "text": "All traffic from the endpoint, including non-web traffic, is secured by FortiSASE."
+    },
+    {
+     "id": "C",
+     "text": "Only HTTP and HTTPS traffic is secured; other traffic bypasses FortiSASE."
+    },
+    {
+     "id": "D",
+     "text": "ZTNA tags are supported."
+    }
+   ],
+   "correct": [
+    "A",
+    "C"
+   ],
+   "explanation": "L16 (sl. 549): agentless znaci SWG sa PAC fajlom. Zasticen je samo web (HTTP/HTTPS), ostali saobracaj ide direktno na internet. ZTNA tagovi nisu podrzani."
+  },
+  {
+   "id": "dump2-fextender",
+   "source": "dump",
+   "lesson": 16,
+   "topic": "FortiSASE - FortiExtender LAN extension",
+   "type": "single",
+   "question": "How does FortiExtender connect to FortiSASE in a site-based, remote internet access method?",
+   "options": [
+    {
+     "id": "A",
+     "text": "FortiExtender uses a Virtual Extensible LAN (VXLAN)-over-IPsec connection."
+    },
+    {
+     "id": "B",
+     "text": "FortiExtender establishes a secure SSL connection using FortiClient."
+    },
+    {
+     "id": "C",
+     "text": "FortiExtender first connects to a FortiGate LAN extension through a secure web gateway (SWG)."
+    },
+    {
+     "id": "D",
+     "text": "FortiExtender uses the proxy auto-configuration (PAC) file and an explicit web proxy to connect."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "Dump kljuc A (q44 Q28). L16 (sl. 550): LAN extension - FortiExtender ili FortiGate otkriva FortiSASE AC, formira IPsec tunel, preko njega VXLAN (L2 mreza)."
+  },
+  {
+   "id": "dump2-sia-agent",
+   "source": "dump",
+   "lesson": 16,
+   "topic": "FortiSASE - SIA agent-based components",
+   "type": "multi",
+   "question": "Which two components are part of the secure internet access (SIA) agent-based mode on FortiSASE? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "FortiSASE Firewall-as-a-Service (FWaaS)"
+    },
+    {
+     "id": "B",
+     "text": "The proxy auto-configuration (PAC) file"
+    },
+    {
+     "id": "C",
+     "text": "VPN policies"
+    },
+    {
+     "id": "D",
+     "text": "FortiExtender"
+    }
+   ],
+   "correct": [
+    "A",
+    "C"
+   ],
+   "explanation": "Dump kljuc A, C (q44 Q23). L16 (sl. 548): u agent-based modu FortiSASE radi kao firewall, a VPN policy nosi sigurnosne komponente. PAC je agentless, FortiExtender je LAN extension."
+  },
+  {
+   "id": "p4-l1-01",
+   "source": "claude",
+   "lesson": 1,
+   "topic": "Admin profiles - super_admin",
+   "type": "single",
+   "question": "Which statement about the default super_admin administrator profile is true?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It can be edited to restrict access to specific areas."
+    },
+    {
+     "id": "B",
+     "text": "It is used by the admin account, cannot be changed, and gives full access to everything."
+    },
+    {
+     "id": "C",
+     "text": "It provides read-only access to all areas."
+    },
+    {
+     "id": "D",
+     "text": "It is deleted automatically after a second administrator is created."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L1 (sl. 18): super_admin je poseban default profil koji koristi nalog admin. Ne moze se menjati i daje pun pristup. Najbolja praksa je praviti profile sa minimalnim potrebnim pravima (npr. auditor_access samo za citanje)."
+  },
+  {
+   "id": "p4-l2-01",
+   "source": "claude",
+   "lesson": 2,
+   "topic": "Logging - disk logging",
+   "type": "multi",
+   "question": "Which two statements about local disk logging on FortiGate are true? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Disk logging must be enabled for information to appear on the FortiView dashboards."
+    },
+    {
+     "id": "B",
+     "text": "By default, logs older than seven days are deleted from the disk."
+    },
+    {
+     "id": "C",
+     "text": "All FortiGate models support disk logging."
+    },
+    {
+     "id": "D",
+     "text": "Disk logging has no performance impact under heavy log usage."
+    }
+   ],
+   "correct": [
+    "A",
+    "B"
+   ],
+   "explanation": "L2 (sl. 40): disk logging se ukljucuje na Log Settings stranici (ili config log disk setting), ali ga ne podrzavaju svi modeli. Bez njega FortiView ne radi, a logovi se vide samo u realnom vremenu. Logovi stariji od 7 dana se brisu po defaultu (podesivo). Pri velikom broju logova disk logging utice na performanse."
+  },
+  {
+   "id": "p4-l2-02",
+   "source": "claude",
+   "lesson": 2,
+   "topic": "Logging - log levels",
+   "type": "single",
+   "question": "Which statement about FortiGate log levels is correct?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Levels range from emergency (most important) to information, plus a debug level that adds diagnostic information."
+    },
+    {
+     "id": "B",
+     "text": "Levels range from debug (most important) to emergency."
+    },
+    {
+     "id": "C",
+     "text": "Information is the recommended level for production because it generates the fewest logs."
+    },
+    {
+     "id": "D",
+     "text": "The debug level is used by default on all log types."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L2 (sl. 36): nivoi idu od emergency do information, a debug dodaje dijagnostiku i koristi se samo uz Fortinet Support. Najnizi razuman nivo je information, ali generise puno logova i moze prerano pokvariti disk. Zato cesto koristis notification ili vise."
+  },
+  {
+   "id": "p4-l3-11",
+   "source": "claude",
+   "lesson": 3,
+   "topic": "Logging - log when session starts",
+   "type": "single",
+   "question": "Generate logs when session starts is enabled in a firewall policy. How many traffic logs does FortiGate create for a single allowed session?",
+   "options": [
+    {
+     "id": "A",
+     "text": "One, at session start."
+    },
+    {
+     "id": "B",
+     "text": "Two, one when the session begins and one when it closes."
+    },
+    {
+     "id": "C",
+     "text": "One, at session close only."
+    },
+    {
+     "id": "D",
+     "text": "None, because this option only creates event logs."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L3 (sl. 91): bez ove opcije log traffica nastaje tek kad se IP sesija zatvori. Sa njom se pravi prvi log pri pocetku sesije i drugi pri zatvaranju. CLI: set logtraffic-start enable. Vece logovanje smanjuje performanse."
+  },
+  {
+   "id": "p4-l4-13",
+   "source": "claude",
+   "lesson": 4,
+   "topic": "Routing - route attributes",
+   "type": "single",
+   "question": "In the routing table entry S* 0.0.0.0/0 [10/0] via 172.20.121.2, port1, [1/0], what do the values mean?",
+   "options": [
+    {
+     "id": "A",
+     "text": "10 is the distance and 0 is the metric; 1 is the priority and 0 is the weight."
+    },
+    {
+     "id": "B",
+     "text": "10 is the metric and 0 is the distance; 1 is the weight and 0 is the priority."
+    },
+    {
+     "id": "C",
+     "text": "10 is the priority and 0 is the distance; the second pair is the metric."
+    },
+    {
+     "id": "D",
+     "text": "10 is the weight and 0 is the metric; the second pair is the distance."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L4 (sl. 128): u prvom paru je prvo distance (staticke i dinamicke rute), a drugo metric (samo dinamicke). Poslednji par je priority i weight. Kod dinamickih ruta je weight uvek 0."
+  },
+  {
+   "id": "p4-l5-01",
+   "source": "claude",
+   "lesson": 5,
+   "topic": "Firewall authentication - active and passive combined",
+   "type": "single",
+   "question": "A firewall uses both active and passive authentication. FortiGate identifies a user passively through FSSO. What does the user see?",
+   "options": [
+    {
+     "id": "A",
+     "text": "A login prompt, because active authentication always runs first."
+    },
+    {
+     "id": "B",
+     "text": "No login prompt, because active authentication is only the backup when passive authentication fails."
+    },
+    {
+     "id": "C",
+     "text": "A login prompt only if the policy with authentication is first in the list."
+    },
+    {
+     "id": "D",
+     "text": "A login prompt only for HTTPS traffic."
+    }
+   ],
+   "correct": [
+    "B"
+   ],
+   "explanation": "L5 (sl. 166): ako FortiGate moze da prepozna korisnika pasivno, korisnik nikad ne dobija login prompt, bez obzira na redosled politika. Aktivna autentifikacija je rezerva kad pasivna ne uspe."
+  },
+  {
+   "id": "p4-l5-02",
+   "source": "claude",
+   "lesson": 5,
+   "topic": "Firewall authentication - active auth requirements",
+   "type": "single",
+   "question": "A firewall policy has authentication enabled and allows only DNS and ICMP. Users cannot get a login prompt. What is the most likely reason?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The policy does not allow at least one supported authentication protocol, such as HTTP, HTTPS, FTP, or Telnet."
+    },
+    {
+     "id": "B",
+     "text": "The policy must allow LDAP for the prompt to appear."
+    },
+    {
+     "id": "C",
+     "text": "DNS must be removed from the policy."
+    },
+    {
+     "id": "D",
+     "text": "Active authentication needs the FSSO collector agent."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L5 (sl. 164): aktivna autentifikacija trazi DNS i bar jedan podrzani protokol (HTTP, HTTPS, FTP, Telnet) kojim FortiGate trazi kredencijale. Pasivna ne zahteva nijedan poseban servis u politici."
+  },
+  {
+   "id": "p4-l7-01",
+   "source": "claude",
+   "lesson": 7,
+   "topic": "Certificates - avoid browser warnings",
+   "type": "multi",
+   "question": "Full SSL inspection with the default FortiGate CA causes browser certificate warnings. Which two actions remove them? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Install the FortiGate CA certificate on the workstations as a trusted root authority."
+    },
+    {
+     "id": "B",
+     "text": "Use a certificate from a private CA for inspection and import the private CA certificate into all browsers."
+    },
+    {
+     "id": "C",
+     "text": "Import the browser's trusted roots into FortiGate only."
+    },
+    {
+     "id": "D",
+     "text": "Set the SSL inspection profile invalid-certificate action to Allow."
+    }
+   ],
+   "correct": [
+    "A",
+    "B"
+   ],
+   "explanation": "L7 (sl. 239): upozorenje nastaje jer browser ne veruje CA-u koji potpisuje FortiGate. To nije ogranicenje FortiGate-a. Resenja su dva: instalirati FortiGate CA kao trusted root na klijentima, ili koristiti privatni CA i uvesti njegov sertifikat u browsere."
+  },
+  {
+   "id": "p4-l7-02",
+   "source": "claude",
+   "lesson": 7,
+   "topic": "Certificates - subordinate CA",
+   "type": "single",
+   "question": "The SSL inspection certificate is signed by a subordinate CA. What must be installed where?",
+   "options": [
+    {
+     "id": "A",
+     "text": "The full certificate chain on FortiGate and the root CA on all client browsers."
+    },
+    {
+     "id": "B",
+     "text": "Only the subordinate CA on all client browsers."
+    },
+    {
+     "id": "C",
+     "text": "The root CA on FortiGate only."
+    },
+    {
+     "id": "D",
+     "text": "Both the root and the intermediate CA on every client browser."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L7 (sl. 239): ceo lanac mora biti na FortiGate-u, a root CA na klijentima. Intermediate CA ne mora u browsere, jer FortiGate salje lanac sertifikata u SSL handshake-u."
+  },
+  {
+   "id": "p4-l9-03",
+   "source": "claude",
+   "lesson": 9,
+   "topic": "Web filtering - static URL filter actions",
+   "type": "single",
+   "question": "Which static URL filter action lets traffic from a trusted site bypass all security inspections?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Allow"
+    },
+    {
+     "id": "B",
+     "text": "Monitor"
+    },
+    {
+     "id": "C",
+     "text": "Exempt"
+    },
+    {
+     "id": "D",
+     "text": "Block"
+    }
+   ],
+   "correct": [
+    "C"
+   ],
+   "explanation": "L9 (sl. 298): URL-ovi se proveravaju od vrha ka dnu. Exempt zaobilazi sve security inspekcije. Allow propusta saobracaj, ali on i dalje ide kroz FortiGuard web filter, content filter i AV. Monitor propusta uz log, a ostale inspekcije ostaju."
+  },
+  {
+   "id": "p4-l11-01",
+   "source": "claude",
+   "lesson": 11,
+   "topic": "IPsec - main vs aggressive mode",
+   "type": "multi",
+   "question": "Which two statements about IKEv1 main and aggressive mode are true? (Choose two.)",
+   "options": [
+    {
+     "id": "A",
+     "text": "Main mode is more secure because the pre-shared key hash is exchanged encrypted."
+    },
+    {
+     "id": "B",
+     "text": "Aggressive mode completes the negotiation after three packets, while main mode uses six."
+    },
+    {
+     "id": "C",
+     "text": "Aggressive mode is more secure because it exchanges fewer packets."
+    },
+    {
+     "id": "D",
+     "text": "In main mode the peer ID is sent in the first packet."
+    }
+   ],
+   "correct": [
+    "A",
+    "B"
+   ],
+   "explanation": "L11 (sl. 374): main mode sifruje hash PSK-a, ali treba 6 paketa. Aggressive treba 3 paketa, a hash ide nesifrovan. Peer ID je u aggressive modu u prvom paketu (zato se koristi za vise dial-up tunela na istoj IP), a u main modu tek u poslednjem."
+  },
+  {
+   "id": "p4-l11-02",
+   "source": "claude",
+   "lesson": 11,
+   "topic": "IPsec - phase 1 IKE SA",
+   "type": "single",
+   "question": "Which statement about the phase 1 IKE SA is correct?",
+   "options": [
+    {
+     "id": "A",
+     "text": "It is bidirectional and uses the same session key for inbound and outbound."
+    },
+    {
+     "id": "B",
+     "text": "It is unidirectional, so two IKE SAs are created."
+    },
+    {
+     "id": "C",
+     "text": "It encrypts the user traffic between the peers."
+    },
+    {
+     "id": "D",
+     "text": "It is negotiated after phase 2."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L11 (sl. 365): phase 1 autentifikuje peer-ove i pravi siguran kanal za pregovaranje phase 2 SA (IPsec SA) koji kasnije sifruju korisnicki saobracaj. IKE SA je bidirekciona i koristi isti session key u oba smera."
+  },
+  {
+   "id": "p4-l12-01",
+   "source": "claude",
+   "lesson": 12,
+   "topic": "SD-WAN - link health monitoring modes",
+   "type": "single",
+   "question": "Which SD-WAN performance SLA detection mode uses traffic passing through the link and sends probes only when there is no traffic?",
+   "options": [
+    {
+     "id": "A",
+     "text": "Active"
+    },
+    {
+     "id": "B",
+     "text": "Passive"
+    },
+    {
+     "id": "C",
+     "text": "Prefer Passive"
+    },
+    {
+     "id": "D",
+     "text": "Manual"
+    }
+   ],
+   "correct": [
+    "C"
+   ],
+   "explanation": "L12 (sl. 418): Active salje probe na server. Passive procenjuje zdravlje linka iz sesija na politikama sa passive-wan-health-measurement. Prefer Passive koristi pasivno merenje, a probe salje tek kad nema saobracaja."
+  },
+  {
+   "id": "p4-l12-02",
+   "source": "claude",
+   "lesson": 12,
+   "topic": "SD-WAN - Lowest cost (SLA) tiebreaker",
+   "type": "single",
+   "question": "An SD-WAN rule uses the Lowest Cost (SLA) strategy without load balancing, and several members meet the SLA target. How does FortiGate pick the preferred member?",
+   "options": [
+    {
+     "id": "A",
+     "text": "By member cost, followed by configuration order as a tiebreaker."
+    },
+    {
+     "id": "B",
+     "text": "By lowest latency, followed by lowest jitter."
+    },
+    {
+     "id": "C",
+     "text": "By configuration order only."
+    },
+    {
+     "id": "D",
+     "text": "By highest bandwidth."
+    }
+   ],
+   "correct": [
+    "A"
+   ],
+   "explanation": "L12 (sl. 419): Lowest cost (SLA) bira clana koji ispunjava SLA target. Ako vise njih ispunjava, tiebreaker je cost, pa redosled konfiguracije. Uz load balancing saobracaj ide kroz sve clanove koji ispunjavaju SLA."
+  },
+  {
+   "id": "p4-l14-04",
+   "source": "claude",
+   "lesson": 14,
+   "topic": "Sniffer - verbosity",
+   "type": "single",
+   "question": "Which sniffer verbosity level prints the header and data from the Ethernet header of the packets, together with the interface name?",
+   "options": [
+    {
+     "id": "A",
+     "text": "3"
+    },
+    {
+     "id": "B",
+     "text": "4"
+    },
+    {
+     "id": "C",
+     "text": "5"
+    },
+    {
+     "id": "D",
+     "text": "6"
+    }
+   ],
+   "correct": [
+    "D"
+   ],
+   "explanation": "L14 (sl. 486): 1 header; 2 header+data od IP headera; 3 header+data od Ethernet headera; 4 header sa imenom interfejsa; 5 header+data od IP sa interfejsom; 6 header+data od Ethernet sa interfejsom. Filter koristi BPF sintaksu."
+  }
+ ],
+ "exams": [
+  {
+   "id": "exam-3",
+   "name": "Ispit 3 (60 pitanja)",
+   "questionIds": [
+    "p4-l3-01",
+    "dump2-views-order",
+    "p4-l3-03",
+    "p4-l3-04",
+    "p4-l3-05",
+    "p4-l3-06",
+    "p4-l3-07",
+    "p4-l3-08",
+    "p4-l3-09",
+    "p4-l3-10",
+    "p4-l4-01",
+    "p4-l4-02",
+    "p4-l4-03",
+    "p4-l4-04",
+    "p4-l4-05",
+    "p4-l4-06",
+    "p4-l4-07",
+    "p4-l4-08",
+    "p4-l4-09",
+    "p4-l4-10",
+    "p4-l4-11",
+    "p4-l4-12",
+    "dump2-fsso-8000",
+    "p4-l6-02",
+    "p4-l8-01",
+    "dump2-wf-profile",
+    "p4-l9-02",
+    "dump2-ips-failopen-log",
+    "p4-l10-02",
+    "p4-l13-01",
+    "dump2-fgcp-reqs",
+    "p4-l13-03",
+    "p4-l13-04",
+    "p4-l13-05",
+    "p4-l13-06",
+    "p4-l14-01",
+    "p4-l14-02",
+    "p4-l14-03",
+    "dump2-cnf-path",
+    "dump2-cnf-creates",
+    "p4-l15-03",
+    "p4-l16-01",
+    "p4-l16-02",
+    "dump2-fextender",
+    "dump2-sia-agent",
+    "p4-l1-01",
+    "p4-l2-01",
+    "p4-l2-02",
+    "p4-l3-11",
+    "p4-l4-13",
+    "p4-l5-01",
+    "p4-l5-02",
+    "p4-l7-01",
+    "p4-l7-02",
+    "p4-l9-03",
+    "p4-l11-01",
+    "p4-l11-02",
+    "p4-l12-01",
+    "p4-l12-02",
+    "p4-l14-04"
+   ],
+   "durationMinutes": 100,
+   "passPercent": 80
+  }
+ ]
+}
